@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:k_chart_plus/k_chart_plus.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,18 +16,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, this.title}) : super(key: key);
+  const MyHomePage({Key? key, this.title}) : super(key: key);
 
   final String? title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -63,19 +65,19 @@ class _MyHomePageState extends State<MyHomePage> {
     _asks = [];
     double amount = 0.0;
     bids.sort((left, right) => left.price.compareTo(right.price));
-    bids.reversed.forEach((item) {
+    for (var item in bids.reversed) {
       amount += item.vol;
       item.vol = amount;
       _bids!.insert(0, item);
-    });
+    }
 
     amount = 0.0;
     asks.sort((left, right) => left.price.compareTo(right.price));
-    asks.forEach((item) {
+    for (var item in asks) {
       amount += item.vol;
       item.vol = amount;
       _asks!.add(item);
-    });
+    }
     setState(() {});
   }
 
@@ -250,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }).catchError((_) {
       showLoading = false;
       setState(() {});
-      print('### datas error $_');
+      debugPrint('### datas error $_');
     });
   }
 
@@ -262,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (response.statusCode == 200) {
       result = response.body;
     } else {
-      print('Failed getting IP address');
+      debugPrint('Failed getting IP address');
     }
     return result;
   }
