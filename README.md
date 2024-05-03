@@ -64,32 +64,23 @@ DepthChart(_bids, _asks, chartColors) //Note: Datas must be an ordered list，
 
 ### Dark | Light Theme
 
-`ChartColor` helped to set the color for the chart. Use `extension` to edit the colors that need to be changed
+`ChartColor` helped to set the color for the chart. You need to flexibly change according to your theme configuration to ensure UI.
+
 
 ```dart
-extension CustomChartColors on ChartColors {
-  ChartColors init() {
-    ThemeData themeData = Theme.of(navigationService.getContext());
-    bgColor = themeData.colorScheme.background;
-    defaultTextColor = themeData.textTheme.bodyMedium?.color ?? const Color(0xff60738E);
-
-    selectBorderColor = themeData.textTheme.bodyMedium?.color ?? Colors.black54;
-    selectFillColor =  themeData.colorScheme.background;
-
-    gridColor = themeData.dividerColor ?? const Color(0xff4c5c74);
-
-    infoWindowNormalColor = themeData.textTheme.bodyMedium?.color ?? const Color(0xffffffff);
-    infoWindowTitleColor = themeData.textTheme.bodyMedium?.color ?? const Color(0xffffffff);
-
-    hCrossColor = themeData.textTheme.bodyMedium?.color ?? const Color(0xffffffff);
-    vCrossColor = themeData.disabledColor.withOpacity(.1);
-    crossTextColor = themeData.textTheme.bodyMedium?.color ?? const Color(0xffffffff);
-
-    maxColor = themeData.textTheme.bodyMedium?.color ?? const Color(0xffffffff);
-    minColor = themeData.textTheme.bodyMedium?.color ?? const Color(0xffffffff);
-    return this;
-  }
-}
+late ThemeData themeData = Theme.of(context);
+late ChartColors chartColors = ChartColors(
+  bgColor: themeData.colorScheme.background,
+  defaultTextColor: themeData.textTheme.labelMedium?.color ?? Colors.grey,
+  gridColor: themeData.dividerColor,
+  hCrossColor: themeData.textTheme.bodyMedium?.color ?? Colors.white,
+  vCrossColor: themeData.disabledColor.withOpacity(.1),
+  crossTextColor: themeData.textTheme.bodyMedium?.color ?? Colors.white,
+  selectBorderColor: themeData.textTheme.bodyMedium?.color ?? Colors.black54,
+  selectFillColor: themeData.colorScheme.background,
+  infoWindowTitleColor: themeData.textTheme.labelMedium?.color ?? Colors.grey,
+  infoWindowNormalColor: themeData.textTheme.bodyMedium?.color ?? Colors.white,
+);
 ```
 
 
