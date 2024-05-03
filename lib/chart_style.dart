@@ -3,9 +3,15 @@ import 'package:flutter/material.dart' show Color;
 class ChartColors {
   Color bgColor = Color(0xffffffff);
 
-  Color kLineColor = Color(0xff4C86CD); ///
-  Color lineFillColor = Color(0x554C86CD); ///
-  Color lineFillInsideColor = Color(0x00000000); ///
+  Color kLineColor = Color(0xff4C86CD);
+
+  ///
+  Color lineFillColor = Color(0x554C86CD);
+
+  ///
+  Color lineFillInsideColor = Color(0x00000000);
+
+  ///
   Color ma5Color = Color(0xffE5B767);
   Color ma10Color = Color(0xff1FD1AC);
   Color ma30Color = Color(0xffB48CE3);

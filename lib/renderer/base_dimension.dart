@@ -18,6 +18,8 @@ class BaseDimension {
     _mBaseHeight = mBaseHeight;
     _mVolumeHeight = volHidden != true ? _mBaseHeight * 0.2 : 0;
     _mSecondaryHeight = _mBaseHeight * 0.2;
-    _mDisplayHeight = _mBaseHeight + _mVolumeHeight + (_mSecondaryHeight * secondaryStateLi.length);
+    _mDisplayHeight = _mBaseHeight +
+        _mVolumeHeight +
+        (_mSecondaryHeight * secondaryStateLi.length);
   }
 }
