@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart' show Color;
 
+/// ChartColors
+///
+/// Note:
+/// If you need to apply multi theme, you need to change at least the colors related to the text, border and background color
+/// Ex:
+/// Background: bgColor, selectFillColor
+/// Border
+/// Text
+///
 class ChartColors {
+  /// the background color of base chart
   Color bgColor;
 
   Color kLineColor;
@@ -11,7 +21,7 @@ class ChartColors {
   ///
   Color lineFillInsideColor;
 
-  ///
+  /// color: ma5, ma10, ma30, up, down, vol, macd, diff, dea, k, d, j, rsi
   Color ma5Color;
   Color ma10Color;
   Color ma30Color;
@@ -28,23 +38,26 @@ class ChartColors {
   Color jColor;
   Color rsiColor;
 
+  /// default text color: apply for text at grid
   Color defaultTextColor;
 
+  /// color of the current price
   Color nowPriceUpColor;
   Color nowPriceDnColor;
   Color nowPriceTextColor;
 
-  //trend color
+  /// trend color
   Color trendLineColor;
 
-  ///depth color
-  Color depthBuyColor;
+  /// depth color
+  Color depthBuyColor; //upColor
   Color depthBuyPathColor;
-  Color depthSellColor;
+  Color depthSellColor; //dnColor
   Color depthSellPathColor;
 
   ///value border color after selection
   Color selectBorderColor;
+
   ///background color when value selected
   Color selectFillColor;
 
@@ -57,14 +70,20 @@ class ChartColors {
   Color infoWindowUpColor;
   Color infoWindowDnColor;
 
+  /// color of the horizontal cross line
   Color hCrossColor;
+
+  /// color of the vertical cross line
   Color vCrossColor;
+
+  /// text color
   Color crossTextColor;
 
   ///The color of the maximum and minimum values in the current display
   Color maxColor;
   Color minColor;
 
+  /// get MA color via index
   Color getMAColor(int index) {
     switch (index % 3) {
       case 1:
@@ -76,13 +95,17 @@ class ChartColors {
     }
   }
 
+  /// constructor chart color
   ChartColors({
     this.bgColor = const Color(0xffffffff),
     this.kLineColor = const Color(0xff4C86CD),
+
     ///
     this.lineFillColor = const Color(0x554C86CD),
+
     ///
     this.lineFillInsideColor = const Color(0x00000000),
+
     ///
     this.ma5Color = const Color(0xffE5B767),
     this.ma10Color = const Color(0xff1FD1AC),
@@ -90,24 +113,21 @@ class ChartColors {
     this.upColor = const Color(0xFF14AD8F),
     this.dnColor = const Color(0xFFD5405D),
     this.volColor = const Color(0xff2f8fd5),
-
     this.macdColor = const Color(0xff2f8fd5),
     this.difColor = const Color(0xffE5B767),
     this.deaColor = const Color(0xff1FD1AC),
-
     this.kColor = const Color(0xffE5B767),
     this.dColor = const Color(0xff1FD1AC),
     this.jColor = const Color(0xffB48CE3),
     this.rsiColor = const Color(0xffE5B767),
-
     this.defaultTextColor = const Color(0xFF909196),
-
     this.nowPriceUpColor = const Color(0xFF14AD8F),
     this.nowPriceDnColor = const Color(0xFFD5405D),
     this.nowPriceTextColor = const Color(0xffffffff),
 
     /// trend color
     this.trendLineColor = const Color(0xFFF89215),
+
     ///depth color
     this.depthBuyColor = const Color(0xFF14AD8F),
     this.depthBuyPathColor = const Color(0x3314AD8F),
@@ -128,10 +148,10 @@ class ChartColors {
     this.infoWindowTitleColor = const Color(0xFF4D4D4E), //0xFF707070
     this.infoWindowUpColor = const Color(0xFF14AD8F),
     this.infoWindowDnColor = const Color(0xFFD5405D),
-
     this.hCrossColor = const Color(0xFF222223),
     this.vCrossColor = const Color(0x28424652),
     this.crossTextColor = const Color(0xFF222223),
+
     ///The color of the maximum and minimum values in the current display
     this.maxColor = const Color(0xFF222223),
     this.minColor = const Color(0xFF222223),
