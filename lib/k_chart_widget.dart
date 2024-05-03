@@ -194,9 +194,10 @@ class _KChartWidgetState extends State<KChartWidget>
             if (widget.isTrendLine && !isLongPress && enableCordRecord) {
               enableCordRecord = false;
               Offset p1 = Offset(getTrendLineX(), mSelectY);
-              if (!waitingForOtherPairofCords)
+              if (!waitingForOtherPairofCords) {
                 lines.add(TrendLine(
                     p1, Offset(-1, -1), trendLineMax!, trendLineScale!));
+              }
 
               if (waitingForOtherPairofCords) {
                 var a = lines.last;
