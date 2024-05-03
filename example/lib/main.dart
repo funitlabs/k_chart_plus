@@ -50,10 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
       final parseJson = json.decode(result);
       final tick = parseJson['tick'] as Map<String, dynamic>;
       final List<DepthEntity> bids = (tick['bids'] as List<dynamic>)
-          .map<DepthEntity>((item) => DepthEntity(item[0] as double, item[1] as double))
+          .map<DepthEntity>(
+              (item) => DepthEntity(item[0] as double, item[1] as double))
           .toList();
       final List<DepthEntity> asks = (tick['asks'] as List<dynamic>)
-          .map<DepthEntity>((item) => DepthEntity(item[0] as double, item[1] as double))
+          .map<DepthEntity>(
+              (item) => DepthEntity(item[0] as double, item[1] as double))
           .toList();
       initDepth(bids, asks);
     });
@@ -101,12 +103,13 @@ class _MyHomePageState extends State<MyHomePage> {
               fixedLength: 2,
               timeFormat: TimeFormat.YEAR_MONTH_DAY,
             ),
-            if (showLoading) Container(
-              width: double.infinity,
-              height: 450,
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
-            ),
+            if (showLoading)
+              Container(
+                width: double.infinity,
+                height: 450,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              ),
           ]),
           _buildTitle(context, 'VOL'),
           buildVolButton(),
@@ -137,9 +140,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Text(
         title,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          // color: Colors.white,
-          fontWeight: FontWeight.w600,
-        ),
+              // color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
       ),
     );
   }
@@ -156,8 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPress: () {
               _volHidden = !_volHidden;
               setState(() {});
-            }
-        ),
+            }),
       ),
     );
   }
@@ -219,7 +221,8 @@ class _MyHomePageState extends State<MyHomePage> {
       txtColor = Theme.of(context).primaryColor;
     } else {
       bgColor = Colors.transparent;
-      txtColor = Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(.75);
+      txtColor =
+          Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(.75);
     }
     return InkWell(
       onTap: () {
@@ -236,8 +239,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: txtColor,
-          ),
+                color: txtColor,
+              ),
           textAlign: TextAlign.center,
         ),
       ),

@@ -1,5 +1,6 @@
 import 'dart:math';
-import 'package:flutter/material.dart' show Color, TextStyle, Rect, Canvas, Size, CustomPainter;
+import 'package:flutter/material.dart'
+    show Color, TextStyle, Rect, Canvas, Size, CustomPainter;
 import 'package:k_chart_plus/utils/date_format_util.dart';
 import '../chart_style.dart' show ChartStyle;
 import '../entity/k_line_entity.dart';
@@ -176,16 +177,16 @@ abstract class BaseChartPainter extends CustomPainter {
 
     mSecondaryRectList.clear();
     for (int i = 0; i < secondaryStateLi.length; ++i) {
-      mSecondaryRectList.add(
-        RenderRect(
-          Rect.fromLTRB(
+      mSecondaryRectList.add(RenderRect(
+        Rect.fromLTRB(
             0,
             mMainRect.bottom + volHeight + i * secondaryHeight + mChildPadding,
             mWidth,
-            mMainRect.bottom + volHeight + i * secondaryHeight + secondaryHeight
-          ),
-        )
-      );
+            mMainRect.bottom +
+                volHeight +
+                i * secondaryHeight +
+                secondaryHeight),
+      ));
     }
   }
 
@@ -200,7 +201,7 @@ abstract class BaseChartPainter extends CustomPainter {
       var item = datas![i];
       getMainMaxMinValue(item, i);
       getVolMaxMinValue(item);
-      for (int idx = 0; idx < mSecondaryRectList.length; ++ idx) {
+      for (int idx = 0; idx < mSecondaryRectList.length; ++idx) {
         getSecondaryMaxMinValue(idx, item);
       }
     }
@@ -261,23 +262,33 @@ abstract class BaseChartPainter extends CustomPainter {
 
   getSecondaryMaxMinValue(int index, KLineEntity item) {
     SecondaryState secondaryState = secondaryStateLi.elementAt(index);
-    switch(secondaryState) {
+    switch (secondaryState) {
       case SecondaryState.MACD:
         if (item.macd != null) {
-          mSecondaryRectList[index].mMaxValue = max(mSecondaryRectList[index].mMaxValue, max(item.macd!, max(item.dif!, item.dea!)));
-          mSecondaryRectList[index].mMinValue = min(mSecondaryRectList[index].mMinValue, min(item.macd!, min(item.dif!, item.dea!)));
+          mSecondaryRectList[index].mMaxValue = max(
+              mSecondaryRectList[index].mMaxValue,
+              max(item.macd!, max(item.dif!, item.dea!)));
+          mSecondaryRectList[index].mMinValue = min(
+              mSecondaryRectList[index].mMinValue,
+              min(item.macd!, min(item.dif!, item.dea!)));
         }
         break;
       case SecondaryState.KDJ:
         if (item.d != null) {
-          mSecondaryRectList[index].mMaxValue = max(mSecondaryRectList[index].mMaxValue, max(item.k!, max(item.d!, item.j!)));
-          mSecondaryRectList[index].mMinValue = min(mSecondaryRectList[index].mMinValue, min(item.k!, min(item.d!, item.j!)));
+          mSecondaryRectList[index].mMaxValue = max(
+              mSecondaryRectList[index].mMaxValue,
+              max(item.k!, max(item.d!, item.j!)));
+          mSecondaryRectList[index].mMinValue = min(
+              mSecondaryRectList[index].mMinValue,
+              min(item.k!, min(item.d!, item.j!)));
         }
         break;
       case SecondaryState.RSI:
         if (item.rsi != null) {
-          mSecondaryRectList[index].mMaxValue = max(mSecondaryRectList[index].mMaxValue, item.rsi!);
-          mSecondaryRectList[index].mMinValue = min(mSecondaryRectList[index].mMinValue, item.rsi!);
+          mSecondaryRectList[index].mMaxValue =
+              max(mSecondaryRectList[index].mMaxValue, item.rsi!);
+          mSecondaryRectList[index].mMinValue =
+              min(mSecondaryRectList[index].mMinValue, item.rsi!);
         }
         break;
       case SecondaryState.WR:
@@ -286,8 +297,10 @@ abstract class BaseChartPainter extends CustomPainter {
         break;
       case SecondaryState.CCI:
         if (item.cci != null) {
-          mSecondaryRectList[index].mMaxValue = max(mSecondaryRectList[index].mMaxValue, item.cci!);
-          mSecondaryRectList[index].mMinValue = min(mSecondaryRectList[index].mMinValue, item.cci!);
+          mSecondaryRectList[index].mMaxValue =
+              max(mSecondaryRectList[index].mMaxValue, item.cci!);
+          mSecondaryRectList[index].mMinValue =
+              min(mSecondaryRectList[index].mMinValue, item.cci!);
         }
         break;
       default:

@@ -16,14 +16,14 @@ First, add `k_chart_plus` as a [dependency in your pubspec.yaml file](https://fl
 k_chart_plus: ^1.0.0
 ```
 
-> If you don't want to support selecting multiple secondary states, you need to use: ```
+> If you don't want to support selecting multiple secondary states, you need to use: 
 > ```
 > k_chart_plus:
-    git:
-      url: https://github.com/TrangLeQuynh/k_chart_plus
-      ref: single #branch name
+>    git:
+>      url: https://github.com/TrangLeQuynh/k_chart_plus
+>      ref: single #branch name
 > ```
-
+>
 
 
 ## Usage
