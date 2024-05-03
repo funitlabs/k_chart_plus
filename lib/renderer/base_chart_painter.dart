@@ -26,8 +26,10 @@ abstract class BaseChartPainter extends CustomPainter {
 
   /// Rectangle box of main chart
   late Rect mMainRect;
+
   /// Rectangle box of the vol chart
   Rect? mVolRect;
+
   /// Secondary list support
   List<RenderRect> mSecondaryRectList = [];
   late double mDisplayHeight, mWidth;
@@ -50,6 +52,7 @@ abstract class BaseChartPainter extends CustomPainter {
   List<String> mFormats = [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn];
   double xFrontPadding;
 
+  /// base dimension
   final BaseDimension baseDimension;
 
   /// constructor BaseChartPainter
@@ -100,9 +103,11 @@ abstract class BaseChartPainter extends CustomPainter {
     // monthly line
     if (time >= 24 * 60 * 60 * 28) {
       mFormats = [yy, '-', mm];
-    } else if (time >= 24 * 60 * 60) { // daily line
+    } else if (time >= 24 * 60 * 60) {
+      // daily line
       mFormats = [yy, '-', mm, '-', dd];
-    } else { // hour line
+    } else {
+      // hour line
       mFormats = [mm, '-', dd, ' ', HH, ':', nn];
     }
   }

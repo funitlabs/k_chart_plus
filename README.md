@@ -13,7 +13,7 @@ Maybe this is the best k chart in Flutter.Support drag,scale,long press,fling.An
 First, add `k_chart_plus` as a [dependency in your pubspec.yaml file](https://flutter.dev/using-packages/).
 
 ```yaml
-k_chart_plus: ^1.0.1
+k_chart_plus: ^1.0.2
 ```
 
 > If you don't want to support selecting multiple secondary states, you need to use: 
@@ -66,6 +66,9 @@ DepthChart(_bids, _asks, chartColors) //Note: Datas must be an ordered list，
 
 `ChartColor` helped to set the color for the chart. You need to flexibly change according to your theme configuration to ensure UI.
 
+>
+> If you need to apply multi theme, you need to change at least the colors related to the text, border, grid and background color
+>
 
 ```dart
 late ThemeData themeData = Theme.of(context);

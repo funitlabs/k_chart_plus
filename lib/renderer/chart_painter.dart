@@ -255,6 +255,7 @@ class ChartPainter extends BaseChartPainter {
 //    }
   }
 
+  /// draw the cross line. when user focus
   @override
   void drawCrossLineText(Canvas canvas, Size size) {
     var index = calculateSelectedX(selectX);
@@ -475,7 +476,7 @@ class ChartPainter extends BaseChartPainter {
         paint,
       );
     }
-    if (lines.length >= 1) {
+    if (lines.isNotEmpty) {
       lines.forEach((element) {
         var y1 = -((element.p1.dy - 35) / element.scale) + element.maxHeight;
         var y2 = -((element.p2.dy - 35) / element.scale) + element.maxHeight;
