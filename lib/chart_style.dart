@@ -1,70 +1,69 @@
 import 'package:flutter/material.dart' show Color;
 
 class ChartColors {
-  Color bgColor = Color(0xffffffff);
+  Color bgColor;
 
-  Color kLineColor = Color(0xff4C86CD);
-
-  ///
-  Color lineFillColor = Color(0x554C86CD);
+  Color kLineColor;
 
   ///
-  Color lineFillInsideColor = Color(0x00000000);
+  Color lineFillColor;
 
   ///
-  Color ma5Color = Color(0xffE5B767);
-  Color ma10Color = Color(0xff1FD1AC);
-  Color ma30Color = Color(0xffB48CE3);
-  Color upColor = Color(0xFF14AD8F);
-  Color dnColor = Color(0xFFD5405D);
-  Color volColor = Color(0xff2f8fd5);
+  Color lineFillInsideColor;
 
-  Color macdColor = Color(0xff2f8fd5);
-  Color difColor = Color(0xffE5B767);
-  Color deaColor = Color(0xff1FD1AC);
+  ///
+  Color ma5Color;
+  Color ma10Color;
+  Color ma30Color;
+  Color upColor;
+  Color dnColor;
+  Color volColor;
 
-  Color kColor = Color(0xffE5B767);
-  Color dColor = Color(0xff1FD1AC);
-  Color jColor = Color(0xffB48CE3);
-  Color rsiColor = Color(0xffE5B767);
+  Color macdColor;
+  Color difColor;
+  Color deaColor;
 
-  Color defaultTextColor = Color(0xFF909196);
+  Color kColor;
+  Color dColor;
+  Color jColor;
+  Color rsiColor;
 
-  Color nowPriceUpColor = Color(0xFF14AD8F);
-  Color nowPriceDnColor = Color(0xFFD5405D);
-  Color nowPriceTextColor = Color(0xffffffff);
+  Color defaultTextColor;
+
+  Color nowPriceUpColor;
+  Color nowPriceDnColor;
+  Color nowPriceTextColor;
 
   //trend color
-  Color trendLineColor = Color(0xFFF89215);
+  Color trendLineColor;
 
   ///depth color
-  Color depthBuyColor = Color(0xFF14AD8F);
-  Color depthBuyPathColor = Color(0x3314AD8F);
-  Color depthSellColor = Color(0xFFD5405D);
-  Color depthSellPathColor = Color(0x33D5405D);
+  Color depthBuyColor;
+  Color depthBuyPathColor;
+  Color depthSellColor;
+  Color depthSellPathColor;
 
   ///value border color after selection
-  Color selectBorderColor = Color(0xFF222223);
-
+  Color selectBorderColor;
   ///background color when value selected
-  Color selectFillColor = Color(0xffffffff);
+  Color selectFillColor;
 
   ///color of grid
-  Color gridColor = Color(0xFFD1D3DB);
+  Color gridColor;
 
   ///color of annotation content
-  Color infoWindowNormalColor = Color(0xFF222223);
-  Color infoWindowTitleColor = Color(0xFF4D4D4E); //0xFF707070
-  Color infoWindowUpColor = Color(0xFF14AD8F);
-  Color infoWindowDnColor = Color(0xFFD5405D);
+  Color infoWindowNormalColor;
+  Color infoWindowTitleColor;
+  Color infoWindowUpColor;
+  Color infoWindowDnColor;
 
-  Color hCrossColor = Color(0xFF222223);
-  Color vCrossColor = Color(0x28424652);
-  Color crossTextColor = Color(0xFF222223);
+  Color hCrossColor;
+  Color vCrossColor;
+  Color crossTextColor;
 
   ///The color of the maximum and minimum values in the current display
-  Color maxColor = Color(0xFF222223);
-  Color minColor = Color(0xFF222223);
+  Color maxColor;
+  Color minColor;
 
   Color getMAColor(int index) {
     switch (index % 3) {
@@ -76,6 +75,67 @@ class ChartColors {
         return ma5Color;
     }
   }
+
+  ChartColors({
+    this.bgColor = const Color(0xffffffff),
+    this.kLineColor = const Color(0xff4C86CD),
+    ///
+    this.lineFillColor = const Color(0x554C86CD),
+    ///
+    this.lineFillInsideColor = const Color(0x00000000),
+    ///
+    this.ma5Color = const Color(0xffE5B767),
+    this.ma10Color = const Color(0xff1FD1AC),
+    this.ma30Color = const Color(0xffB48CE3),
+    this.upColor = const Color(0xFF14AD8F),
+    this.dnColor = const Color(0xFFD5405D),
+    this.volColor = const Color(0xff2f8fd5),
+
+    this.macdColor = const Color(0xff2f8fd5),
+    this.difColor = const Color(0xffE5B767),
+    this.deaColor = const Color(0xff1FD1AC),
+
+    this.kColor = const Color(0xffE5B767),
+    this.dColor = const Color(0xff1FD1AC),
+    this.jColor = const Color(0xffB48CE3),
+    this.rsiColor = const Color(0xffE5B767),
+
+    this.defaultTextColor = const Color(0xFF909196),
+
+    this.nowPriceUpColor = const Color(0xFF14AD8F),
+    this.nowPriceDnColor = const Color(0xFFD5405D),
+    this.nowPriceTextColor = const Color(0xffffffff),
+
+    /// trend color
+    this.trendLineColor = const Color(0xFFF89215),
+    ///depth color
+    this.depthBuyColor = const Color(0xFF14AD8F),
+    this.depthBuyPathColor = const Color(0x3314AD8F),
+    this.depthSellColor = const Color(0xFFD5405D),
+    this.depthSellPathColor = const Color(0x33D5405D),
+
+    ///value border color after selection
+    this.selectBorderColor = const Color(0xFF222223),
+
+    ///background color when value selected
+    this.selectFillColor = const Color(0xffffffff),
+
+    ///color of grid
+    this.gridColor = const Color(0xFFD1D3DB),
+
+    ///color of annotation content
+    this.infoWindowNormalColor = const Color(0xFF222223),
+    this.infoWindowTitleColor = const Color(0xFF4D4D4E), //0xFF707070
+    this.infoWindowUpColor = const Color(0xFF14AD8F),
+    this.infoWindowDnColor = const Color(0xFFD5405D),
+
+    this.hCrossColor = const Color(0xFF222223),
+    this.vCrossColor = const Color(0x28424652),
+    this.crossTextColor = const Color(0xFF222223),
+    ///The color of the maximum and minimum values in the current display
+    this.maxColor = const Color(0xFF222223),
+    this.minColor = const Color(0xFF222223),
+  });
 }
 
 class ChartStyle {
