@@ -13,7 +13,7 @@ Maybe this is the best k chart in Flutter.Support drag,scale,long press,fling.An
 First, add `k_chart_plus` as a [dependency in your pubspec.yaml file](https://flutter.dev/using-packages/).
 
 ```yaml
-k_chart_plus: ^1.0.0
+k_chart_plus: ^1.0.1
 ```
 
 > If you don't want to support selecting multiple secondary states, you need to use: 
