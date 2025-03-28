@@ -5,7 +5,8 @@ import 'package:k_chart_plus/k_chart_plus.dart';
 
 class DepthChart extends StatefulWidget {
   final List<DepthEntity> bids, asks;
-  final int fixedLength;
+  final int baseUnit;
+  final int quoteUnit;
   final Offset offset;
   final ChartColors chartColors;
   final DepthChartTranslations chartTranslations;
@@ -14,7 +15,8 @@ class DepthChart extends StatefulWidget {
     this.bids,
     this.asks,
     this.chartColors, {
-    this.fixedLength = 2,
+    this.baseUnit = 2,
+    this.quoteUnit = 6,
     this.offset = const Offset(10, 10),
     this.chartTranslations = const DepthChartTranslations(),
   });
@@ -52,7 +54,8 @@ class _DepthChartState extends State<DepthChart> {
           widget.asks,
           pressOffset,
           isLongPress,
-          widget.fixedLength,
+          widget.baseUnit,
+          widget.quoteUnit,
           widget.chartColors,
           widget.offset,
           widget.chartTranslations,
@@ -67,7 +70,8 @@ class DepthChartPainter extends CustomPainter {
   List<DepthEntity>? mBuyData, mSellData;
   Offset? pressOffset;
   bool isLongPress;
-  int? fixedLength;
+  int baseUnit;
+  int quoteUnit;
   ChartColors chartColors;
 
   double mPaddingBottom = 32.0;
@@ -99,7 +103,8 @@ class DepthChartPainter extends CustomPainter {
     this.mSellData,
     this.pressOffset,
     this.isLongPress,
-    this.fixedLength,
+    this.baseUnit,
+    this.quoteUnit,
     this.chartColors,
     this.offset,
     this.chartTranslations,
@@ -135,7 +140,6 @@ class DepthChartPainter extends CustomPainter {
     mMaxVolume = max(mMaxVolume!, mSellData!.last.vol);
     mMaxVolume = mMaxVolume! * 1.05;
     mMultiple = mMaxVolume! / mLineCount;
-    fixedLength ??= 2;
 
     selectPaint = Paint()
       ..isAntiAlias = true
@@ -251,7 +255,7 @@ class DepthChartPainter extends CustomPainter {
     String str;
     for (int j = 0; j < mLineCount; j++) {
       value = mMaxVolume! - mMultiple! * j;
-      str = value.toStringAsFixed(fixedLength!);
+      str = value.toStringAsFixed(baseUnit!);
       var tp = getTextPainter(str);
       tp.layout();
       tp.paint(
@@ -260,14 +264,14 @@ class DepthChartPainter extends CustomPainter {
               mWidth - tp.width, mDrawHeight / mLineCount * j + tp.height / 2));
     }
 
-    var startText = mBuyData!.first.price.toStringAsFixed(fixedLength!);
+    var startText = mBuyData!.first.price.toStringAsFixed(quoteUnit!);
     TextPainter startTP = getTextPainter(startText);
     startTP.layout();
     startTP.paint(canvas, Offset(0, getBottomTextY(startTP.height)));
 
     double centerPrice = (mBuyData!.last.price + mSellData!.first.price) / 2;
 
-    var center = centerPrice.toStringAsFixed(fixedLength!);
+    var center = centerPrice.toStringAsFixed(quoteUnit!);
     TextPainter centerTP = getTextPainter(center);
     centerTP.layout();
     centerTP.paint(
@@ -275,14 +279,14 @@ class DepthChartPainter extends CustomPainter {
         Offset(
             mDrawWidth - centerTP.width / 2, getBottomTextY(centerTP.height)));
 
-    var endText = mSellData!.last.price.toStringAsFixed(fixedLength!);
+    var endText = mSellData!.last.price.toStringAsFixed(quoteUnit!);
     TextPainter endTP = getTextPainter(endText);
     endTP.layout();
     endTP.paint(
         canvas, Offset(mWidth - endTP.width, getBottomTextY(endTP.height)));
 
     var leftHalfText = ((mBuyData!.first.price + centerPrice) / 2)
-        .toStringAsFixed(fixedLength!);
+        .toStringAsFixed(quoteUnit!);
     TextPainter leftHalfTP = getTextPainter(leftHalfText);
     leftHalfTP.layout();
     leftHalfTP.paint(
@@ -291,7 +295,7 @@ class DepthChartPainter extends CustomPainter {
             getBottomTextY(leftHalfTP.height)));
 
     var rightHalfText = ((mSellData!.last.price + centerPrice) / 2)
-        .toStringAsFixed(fixedLength!);
+        .toStringAsFixed(quoteUnit!);
     TextPainter rightHalfTP = getTextPainter(rightHalfText);
     rightHalfTP.layout();
     rightHalfTP.paint(
@@ -335,8 +339,8 @@ class DepthChartPainter extends CustomPainter {
     _PopupPainter popupPainter = _PopupPainter(
       chartTranslations: this.chartTranslations,
       chartColors: this.chartColors,
-      price: entity.price.toStringAsFixed(fixedLength!),
-      amount: entity.vol.toStringAsFixed(fixedLength!),
+      price: entity.price.toStringAsFixed(quoteUnit!),
+      amount: entity.vol.toStringAsFixed(baseUnit!),
     );
     dx = dx < mDrawWidth ? dx + offset.dx : dx - offset.dx - popupPainter.width;
     dy = dy < mDrawHeight / 2
