@@ -71,7 +71,8 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     TextSpan span = TextSpan(
       children: [
         TextSpan(
-          text: "VOL:${NumberUtil.format(data.vol)} ",
+          text:
+              "VOL:${data.vol >= 1000 ? NumberUtil.format(data.vol) : data.vol.toStringAsFixed(chartStyle.volDecimalPlaces)} ",
           style: getTextStyle(this.chartColors.volColor),
         ),
         ...volumeMaDayList
@@ -85,7 +86,8 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
               // indicatorColors의 인덱스를 순환하여 사용 (0~3)
               return TextSpan(
-                text: "MA($day):${NumberUtil.format(maValue)} ",
+                text:
+                    "MA($day):${maValue >= 1000 ? NumberUtil.format(maValue) : maValue.toStringAsFixed(chartStyle.volDecimalPlaces)} ",
                 style: getTextStyle(this.chartColors.getMAColor(index)),
               );
             })
