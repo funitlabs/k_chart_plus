@@ -22,6 +22,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   double _contentPadding = 5.0;
   List<int> maDayList;
   List<int> emaDayList;
+  List<int> avlDayList;
   final ChartStyle chartStyle;
   final ChartColors chartColors;
   final double mLineStrokeWidth = 1.0;
@@ -42,7 +43,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       this.scaleX,
       this.verticalTextAlignment,
       [this.maDayList = const [5, 10, 20],
-      this.emaDayList = const [5, 10, 20]])
+      this.emaDayList = const [5, 10, 20],
+      this.avlDayList = const [5, 10, 20]])
       : super(
             chartRect: mainRect,
             maxValue: maxValue,
@@ -145,21 +147,11 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   List<InlineSpan> _createAVLTextSpan(CandleEntity data) {
     List<InlineSpan> result = [];
-    if (data.avl5 != 0) {
-      result.add(TextSpan(
-          text: "AVL5:${format(data.avl5)}    ",
-          style: getTextStyle(this.chartColors.ma5Color)));
-    }
-    if (data.avl10 != 0) {
-      result.add(TextSpan(
-          text: "AVL10:${format(data.avl10)}    ",
-          style: getTextStyle(this.chartColors.ma10Color)));
-    }
-    if (data.avl20 != 0) {
-      result.add(TextSpan(
-          text: "AVL20:${format(data.avl20)}    ",
-          style: getTextStyle(this.chartColors.ma30Color)));
-    }
+    double currentAvgPrice =
+        (data.high + data.low + data.open + data.close) / 4;
+    result.add(TextSpan(
+        text: "AVL:${format(currentAvgPrice)}    ",
+        style: getTextStyle(this.chartColors.ma5Color)));
     return result;
   }
 
@@ -287,17 +279,11 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawAVLLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
-    if (lastPoint.avl5 != 0 && curPoint.avl5 != 0) {
-      drawLine(lastPoint.avl5, curPoint.avl5, canvas, lastX, curX,
-          this.chartColors.ma5Color);
-    }
-    if (lastPoint.avl10 != 0 && curPoint.avl10 != 0) {
-      drawLine(lastPoint.avl10, curPoint.avl10, canvas, lastX, curX,
-          this.chartColors.ma10Color);
-    }
-    if (lastPoint.avl20 != 0 && curPoint.avl20 != 0) {
-      drawLine(lastPoint.avl20, curPoint.avl20, canvas, lastX, curX,
-          this.chartColors.ma30Color);
+    for (int i = 0; i < (curPoint.avlValueList?.length ?? 0); i++) {
+      if (lastPoint.avlValueList?[i] != 0 && curPoint.avlValueList?[i] != 0) {
+        drawLine(lastPoint.avlValueList?[i], curPoint.avlValueList?[i], canvas,
+            lastX, curX, this.chartColors.getMAColor(i));
+      }
     }
   }
 

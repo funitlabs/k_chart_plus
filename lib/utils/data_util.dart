@@ -6,6 +6,7 @@ class DataUtil {
   static calculate(List<KLineEntity> dataList,
       [List<int> maDayList = const [5, 10, 20],
       List<int> emaDayList = const [5, 10, 20],
+      List<int> avlDayList = const [5, 10, 20],
       int n = 20,
       k = 2]) {
     calcMA(dataList, maDayList);
@@ -18,7 +19,7 @@ class DataUtil {
     calcCCI(dataList);
     calculateEMA(dataList, emaDayList);
     calculateSAR(dataList);
-    calculateAVL(dataList);
+    calculateAVL(dataList, avlDayList);
   }
 
   static calcMA(List<KLineEntity> dataList, List<int> maDayList) {
@@ -327,25 +328,27 @@ class DataUtil {
     }
   }
 
-  static void calculateAVL(List<KLineEntity> dataList) {
-    double avl5 = 0.0;
-    double avl10 = 0.0;
-    double avl20 = 0.0;
+  static void calculateAVL(List<KLineEntity> dataList,
+      [List<int> avlDayList = const [5, 10, 20]]) {
+    List<double> avl = List<double>.filled(avlDayList.length, 0.0);
 
     for (int i = 0; i < dataList.length; i++) {
       KLineEntity entity = dataList[i];
-      if (i == 0) {
-        avl5 = entity.vol;
-        avl10 = entity.vol;
-        avl20 = entity.vol;
-      } else {
-        avl5 = (avl5 * 4 + entity.vol) / 5;
-        avl10 = (avl10 * 9 + entity.vol) / 10;
-        avl20 = (avl20 * 19 + entity.vol) / 20;
+      entity.avlValueList = List<double>.filled(avlDayList.length, 0.0);
+
+      // 현재 캔들의 평균체결가격 계산 ((고가 + 저가 + 시가 + 종가) / 4)
+      double currentAvgPrice =
+          (entity.high + entity.low + entity.open + entity.close) / 4;
+
+      for (int j = 0; j < avlDayList.length; j++) {
+        if (i == 0) {
+          avl[j] = currentAvgPrice;
+        } else {
+          avl[j] =
+              (avl[j] * (avlDayList[j] - 1) + currentAvgPrice) / avlDayList[j];
+        }
+        entity.avlValueList?[j] = avl[j];
       }
-      entity.avl5 = avl5;
-      entity.avl10 = avl10;
-      entity.avl20 = avl20;
     }
   }
 }
