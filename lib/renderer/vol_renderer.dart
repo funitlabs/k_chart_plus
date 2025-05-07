@@ -53,15 +53,18 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     TextSpan span = TextSpan(
       children: [
         TextSpan(
-            text: "VOL:${NumberUtil.format(data.vol)}    ",
+            text:
+                "VOL:${data.vol.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
             style: getTextStyle(this.chartColors.volColor)),
         if (data.MA5Volume.notNullOrZero)
           TextSpan(
-              text: "MA5:${NumberUtil.format(data.MA5Volume!)}    ",
+              text:
+                  "MA(5):${data.MA5Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
               style: getTextStyle(this.chartColors.ma5Color)),
         if (data.MA10Volume.notNullOrZero)
           TextSpan(
-              text: "MA10:${NumberUtil.format(data.MA10Volume!)}    ",
+              text:
+                  "MA(10):${data.MA10Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
               style: getTextStyle(this.chartColors.ma10Color)),
       ],
     );
@@ -72,8 +75,9 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
   @override
   void drawVerticalText(canvas, textStyle, int gridRows) {
-    TextSpan span =
-        TextSpan(text: "${NumberUtil.format(maxValue)}", style: textStyle);
+    TextSpan span = TextSpan(
+        text: "${maxValue.toStringAsFixed(chartStyle.volDecimalPlaces)}",
+        style: textStyle);
     TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);
     tp.layout();
     tp.paint(

@@ -213,6 +213,9 @@ class ChartStyle {
   int bollPeriod = 20;
   double bollBandwidth = 2.0;
 
+  /// VOL decimal places
+  int volDecimalPlaces = 0;
+
   ChartStyle({
     this.topPadding = 30.0,
     this.bottomPadding = 20.0,
@@ -235,5 +238,6 @@ class ChartStyle {
     this.sarMaximum = 0.2,
     this.bollPeriod = 20,
     this.bollBandwidth = 2.0,
+    this.volDecimalPlaces = 0,
   });
 }
