@@ -92,49 +92,11 @@ class ChartColors {
   final Color maxColor;
   final Color minColor;
 
-  List<Color>? indicatorColors = [
-    Colors.orange,
-    Colors.pink,
-    Colors.deepPurple,
-    Colors.greenAccent,
-    Colors.brown,
-    Colors.teal,
-    Colors.indigo,
-    Colors.lightGreen,
-    Colors.deepOrange,
-    Colors.deepPurple,
-  ];
+  List<Color>? indicatorColors;
 
   /// get MA color via index
   Color getMAColor(int index) {
-    if (indicatorColors != null && indicatorColors!.isNotEmpty) {
-      return indicatorColors![index];
-    } else {
-      switch (index) {
-        case 0:
-          return ma5Color;
-        case 1:
-          return ma10Color;
-        case 2:
-          return ma30Color;
-        case 3:
-          return ma60Color;
-        case 4:
-          return ma90Color;
-        case 5:
-          return ma120Color;
-        case 6:
-          return ma250Color;
-        case 7:
-          return ma360Color;
-        case 8:
-          return ma720Color;
-        case 9:
-          return ma1080Color;
-        default:
-          return ma1440Color;
-      }
-    }
+    return indicatorColors![index];
   }
 
   /// constructor chart color
@@ -206,7 +168,18 @@ class ChartColors {
     ///The color of the maximum and minimum values in the current display
     this.maxColor = const Color(0xFF60738E),
     this.minColor = const Color(0xFF60738E),
-    this.indicatorColors,
+    this.indicatorColors = const [
+      Colors.orange,
+      Colors.pink,
+      Colors.deepPurple,
+      Colors.greenAccent,
+      Colors.brown,
+      Colors.teal,
+      Colors.indigo,
+      Colors.lightGreen,
+      Colors.deepOrange,
+      Colors.deepPurple,
+    ],
   });
 }
 
