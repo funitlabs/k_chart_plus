@@ -72,7 +72,7 @@ class KChartWidget extends StatefulWidget {
     this.chartStyle = const ChartStyle(),
     this.verticalTextAlignment = VerticalTextAlignment.left,
     this.isTrendLine = false,
-    this.xFrontPadding = 0.0,
+    this.xFrontPadding = 100.0,
     this.volDecimalPlaces = 0,
     this.indicatorColors,
   })  : this.chartColors =
