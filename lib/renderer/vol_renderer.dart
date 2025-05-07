@@ -71,7 +71,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     TextSpan span = TextSpan(
       children: [
         TextSpan(
-          text: "VOL:${format(data.vol)} ",
+          text: "VOL:${NumberUtil.format(data.vol)} ",
           style: getTextStyle(this.chartColors.volColor),
         ),
         ...volumeMaDayList

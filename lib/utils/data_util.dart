@@ -6,7 +6,7 @@ class DataUtil {
   static calculate(List<KLineEntity> dataList,
       [List<int> maDayList = const [5, 10, 20],
       List<int> emaDayList = const [5, 10, 20],
-      List<int> avlDayList = const [5, 10, 20],
+      List<int> volumeMaDayList = const [5, 10, 20],
       int n = 20,
       k = 2,
       double sarStart = 0.02,
@@ -15,7 +15,7 @@ class DataUtil {
       double bollBandwidth = 2.0]) {
     calcMA(dataList, maDayList);
     calcBOLL(dataList, bollPeriod, bollBandwidth);
-    calcVolumeMA(dataList, avlDayList);
+    calcVolumeMA(dataList, volumeMaDayList);
     calcKDJ(dataList);
     calcMACD(dataList);
     calcRSI(dataList);

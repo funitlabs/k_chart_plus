@@ -74,7 +74,10 @@ class KLineEntity extends KEntity {
 
     for (int day in maDayList) {
       double maValue = calculateMA(day, (e) => e.vol);
-      setMAVolume(day, maValue);
+      if (maValue > 0) {
+        // MA 값이 0보다 큰 경우에만 저장
+        setMAVolume(day, maValue);
+      }
     }
   }
 
@@ -86,12 +89,14 @@ class KLineEntity extends KEntity {
     int count = 0;
     KLineEntity? current = this;
 
+    // day 기간만큼의 데이터가 있는지 확인
     for (int i = 0; i < day && current != null; i++) {
       sum += valueSelector(current);
       count++;
       current = current.previous;
     }
 
-    return count > 0 ? sum / count : 0;
+    // 충분한 데이터가 있는 경우에만 MA 값 계산
+    return count == day ? sum / count : 0;
   }
 }
