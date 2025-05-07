@@ -60,12 +60,12 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
           TextSpan(
               text:
                   "MA(5):${data.MA5Volume! >= 1000 ? NumberUtil.format(data.MA5Volume!) : data.MA5Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
-              style: getTextStyle(this.chartColors.ma5Color)),
+              style: getTextStyle(this.chartColors.getMAColor(0))),
         if (data.MA10Volume.notNullOrZero)
           TextSpan(
               text:
                   "MA(10):${data.MA10Volume! >= 1000 ? NumberUtil.format(data.MA10Volume!) : data.MA10Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
-              style: getTextStyle(this.chartColors.ma10Color)),
+              style: getTextStyle(this.chartColors.getMAColor(1))),
       ],
     );
     TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);

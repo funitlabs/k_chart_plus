@@ -89,15 +89,15 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
           if (data.up != 0)
             TextSpan(
                 text: "UP:${format(data.up)} ",
-                style: getTextStyle(chartColors.getMAColor(0))),
+                style: getTextStyle(chartColors.getMAColor(1))),
           if (data.mb != 0)
             TextSpan(
                 text: "MB:${format(data.mb)} ",
-                style: getTextStyle(chartColors.getMAColor(1))),
+                style: getTextStyle(chartColors.getMAColor(2))),
           if (data.dn != 0)
             TextSpan(
                 text: "DN:${format(data.dn)}",
-                style: getTextStyle(chartColors.getMAColor(2))),
+                style: getTextStyle(chartColors.getMAColor(3))),
         ],
       );
     } else if (state == MainState.EMA) {
@@ -154,7 +154,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     return [
       TextSpan(
         text: "AVL:${format(data.avl ?? 0)}  ",
-        style: getTextStyle(this.chartColors.avlColor),
+        style: getTextStyle(this.chartColors.getMAColor(0)),
       )
     ];
   }
