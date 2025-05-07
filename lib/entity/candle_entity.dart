@@ -8,7 +8,7 @@ mixin CandleEntity {
 
   List<double>? maValueList;
   List<double>? emaValueList; // EMA 값을 저장할 리스트로 변경
-  List<double>? avlValueList; // 평균체결가격 리스트
+  double? avl; // 중간값으로 변경
 
 //  上轨线
   double? up;

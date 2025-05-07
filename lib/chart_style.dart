@@ -24,7 +24,12 @@ class ChartColors {
   /// color: ma5, ma10, ma30, up, down, vol, macd, diff, dea, k, d, j, rsi
   Color ma5Color;
   Color ma10Color;
+  Color ma20Color;
   Color ma30Color;
+  Color ma60Color;
+  Color ma120Color;
+  Color ma250Color;
+  Color avlColor;
   Color upColor;
   Color dnColor;
   Color volColor;
@@ -109,7 +114,12 @@ class ChartColors {
     ///
     this.ma5Color = const Color(0xffE5B767),
     this.ma10Color = const Color(0xff1FD1AC),
-    this.ma30Color = const Color(0xffB48CE3),
+    this.ma20Color = const Color(0xFFE6A23C),
+    this.ma30Color = const Color(0xFFE6A23C),
+    this.ma60Color = const Color(0xFFE6A23C),
+    this.ma120Color = const Color(0xFFE6A23C),
+    this.ma250Color = const Color(0xFFE6A23C),
+    this.avlColor = const Color(0xFF2196F3),
     this.upColor = const Color(0xFF14AD8F),
     this.dnColor = const Color(0xFFD5405D),
     this.volColor = const Color(0xff2f8fd5),
@@ -192,4 +202,6 @@ class ChartStyle {
 
   ///customize the time below
   List<String>? dateTimeFormat;
+
+  double lineWidth = 1.0;
 }

@@ -146,13 +146,12 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   }
 
   List<InlineSpan> _createAVLTextSpan(CandleEntity data) {
-    List<InlineSpan> result = [];
-    double currentAvgPrice =
-        (data.high + data.low + data.open + data.close) / 4;
-    result.add(TextSpan(
-        text: "AVL:${format(currentAvgPrice)}    ",
-        style: getTextStyle(this.chartColors.ma5Color)));
-    return result;
+    return [
+      TextSpan(
+        text: "AVL:${format(data.avl ?? 0)}  ",
+        style: getTextStyle(this.chartColors.avlColor),
+      )
+    ];
   }
 
   @override
@@ -279,12 +278,18 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawAVLLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
-    for (int i = 0; i < (curPoint.avlValueList?.length ?? 0); i++) {
-      if (lastPoint.avlValueList?[i] != 0 && curPoint.avlValueList?[i] != 0) {
-        drawLine(lastPoint.avlValueList?[i], curPoint.avlValueList?[i], canvas,
-            lastX, curX, this.chartColors.getMAColor(i));
-      }
-    }
+    if (lastPoint.avl == null || curPoint.avl == null) return;
+
+    double lastY = getY(lastPoint.avl!);
+    double curY = getY(curPoint.avl!);
+
+    canvas.drawLine(
+        Offset(lastX, lastY),
+        Offset(curX, curY),
+        Paint()
+          ..color = this.chartColors.avlColor
+          ..strokeWidth = this.chartStyle.lineWidth
+          ..isAntiAlias = true);
   }
 
   void drawCandle(CandleEntity curPoint, Canvas canvas, double curX) {
