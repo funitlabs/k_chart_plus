@@ -59,6 +59,7 @@ class KChartWidget extends StatefulWidget {
   final VerticalTextAlignment verticalTextAlignment;
   final bool isTrendLine;
   final double xFrontPadding;
+  final int volDecimalPlaces;
 
   KChartWidget(
     this.datas,
@@ -88,6 +89,7 @@ class KChartWidget extends StatefulWidget {
     this.isOnDrag,
     this.verticalTextAlignment = VerticalTextAlignment.left,
     this.mBaseHeight = 360,
+    this.volDecimalPlaces = 0,
   });
 
   @override
@@ -147,15 +149,42 @@ class _KChartWidgetState extends State<KChartWidget>
       volHidden: widget.volHidden,
       secondaryStateLi: widget.secondaryStateLi,
     );
+
+    // Create a new ChartStyle with volDecimalPlaces
+    final chartStyle = ChartStyle(
+      topPadding: widget.chartStyle.topPadding,
+      bottomPadding: widget.chartStyle.bottomPadding,
+      childPadding: widget.chartStyle.childPadding,
+      pointWidth: widget.chartStyle.pointWidth,
+      candleWidth: widget.chartStyle.candleWidth,
+      candleLineWidth: widget.chartStyle.candleLineWidth,
+      volWidth: widget.chartStyle.volWidth,
+      macdWidth: widget.chartStyle.macdWidth,
+      vCrossWidth: widget.chartStyle.vCrossWidth,
+      hCrossWidth: widget.chartStyle.hCrossWidth,
+      nowPriceLineLength: widget.chartStyle.nowPriceLineLength,
+      nowPriceLineSpan: widget.chartStyle.nowPriceLineSpan,
+      nowPriceLineWidth: widget.chartStyle.nowPriceLineWidth,
+      gridRows: widget.chartStyle.gridRows,
+      gridColumns: widget.chartStyle.gridColumns,
+      dateTimeFormat: widget.chartStyle.dateTimeFormat,
+      lineWidth: widget.chartStyle.lineWidth,
+      sarStart: widget.chartStyle.sarStart,
+      sarMaximum: widget.chartStyle.sarMaximum,
+      bollPeriod: widget.chartStyle.bollPeriod,
+      bollBandwidth: widget.chartStyle.bollBandwidth,
+      volDecimalPlaces: widget.volDecimalPlaces,
+    );
+
     final _painter = ChartPainter(
-      widget.chartStyle,
+      chartStyle,
       widget.chartColors,
       baseDimension: baseDimension,
-      lines: lines, //For TrendLine
+      lines: lines,
       sink: mInfoWindowStream.sink,
       xFrontPadding: widget.xFrontPadding,
-      isTrendLine: widget.isTrendLine, //For TrendLine
-      selectY: mSelectY, //For TrendLine
+      isTrendLine: widget.isTrendLine,
+      selectY: mSelectY,
       datas: widget.datas,
       scaleX: mScaleX,
       scrollX: mScrollX,
