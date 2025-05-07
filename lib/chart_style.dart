@@ -125,6 +125,25 @@ class ChartColors {
     }
   }
 
+  /// get indicator color via index
+  Color getIndicatorColor(int index) {
+    if (indicatorColors != null && indicatorColors!.isNotEmpty) {
+      return indicatorColors![index % indicatorColors!.length];
+    }
+    switch (index) {
+      case 0:
+        return defaultTextColor;
+      case 1:
+        return ma10Color;
+      case 2:
+        return ma5Color;
+      case 3:
+        return ma30Color;
+      default:
+        return defaultTextColor;
+    }
+  }
+
   /// constructor chart color
   ChartColors({
     this.bgColor = const Color(0xFF1E222D),
