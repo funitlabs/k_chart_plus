@@ -36,12 +36,12 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
     if (lastPoint.MA5Volume != 0) {
       drawLine(lastPoint.MA5Volume, curPoint.MA5Volume, canvas, lastX, curX,
-          this.chartColors.ma5Color);
+          this.chartColors.getMAColor(0));
     }
 
     if (lastPoint.MA10Volume != 0) {
       drawLine(lastPoint.MA10Volume, curPoint.MA10Volume, canvas, lastX, curX,
-          this.chartColors.ma10Color);
+          this.chartColors.getMAColor(1));
     }
   }
 
