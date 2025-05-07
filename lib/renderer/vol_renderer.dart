@@ -5,9 +5,17 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
   late double mVolWidth;
   final ChartStyle chartStyle;
   final ChartColors chartColors;
+  final List<int> volumeMaDayList;
 
-  VolRenderer(Rect mainRect, double maxValue, double minValue,
-      double topPadding, int fixedLength, this.chartStyle, this.chartColors)
+  VolRenderer(
+      Rect mainRect,
+      double maxValue,
+      double minValue,
+      double topPadding,
+      int fixedLength,
+      this.chartStyle,
+      this.chartColors,
+      this.volumeMaDayList)
       : super(
           chartRect: mainRect,
           maxValue: maxValue,
@@ -34,14 +42,28 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
                 : this.chartColors.dnColor);
     }
 
-    if (lastPoint.MA5Volume != 0) {
-      drawLine(lastPoint.MA5Volume, curPoint.MA5Volume, canvas, lastX, curX,
-          this.chartColors.getMAColor(0));
+    for (int i = 0; i < volumeMaDayList.length; i++) {
+      final maValue = _getVolumeMAValue(curPoint, volumeMaDayList[i]);
+      final lastMaValue = _getVolumeMAValue(lastPoint, volumeMaDayList[i]);
+      if (lastMaValue != 0 && maValue != 0) {
+        drawLine(lastMaValue, maValue, canvas, lastX, curX,
+            this.chartColors.getMAColor(i));
+      }
     }
+  }
 
-    if (lastPoint.MA10Volume != 0) {
-      drawLine(lastPoint.MA10Volume, curPoint.MA10Volume, canvas, lastX, curX,
-          this.chartColors.getMAColor(1));
+  double _getVolumeMAValue(VolumeEntity point, int day) {
+    switch (day) {
+      case 5:
+        return point.MA5Volume ?? 0;
+      case 10:
+        return point.MA10Volume ?? 0;
+      case 20:
+        return point.MA20Volume ?? 0;
+      case 30:
+        return point.MA30Volume ?? 0;
+      default:
+        return 0;
     }
   }
 
@@ -50,22 +72,25 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
   @override
   void drawText(Canvas canvas, VolumeEntity data, double x) {
+    if (data.vol == 0) return;
     TextSpan span = TextSpan(
       children: [
         TextSpan(
-            text:
-                "VOL:${data.vol >= 1000 ? NumberUtil.format(data.vol) : data.vol.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
-            style: getTextStyle(this.chartColors.volColor)),
-        if (data.MA5Volume.notNullOrZero)
-          TextSpan(
-              text:
-                  "MA(5):${data.MA5Volume! >= 1000 ? NumberUtil.format(data.MA5Volume!) : data.MA5Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
-              style: getTextStyle(this.chartColors.getMAColor(0))),
-        if (data.MA10Volume.notNullOrZero)
-          TextSpan(
-              text:
-                  "MA(10):${data.MA10Volume! >= 1000 ? NumberUtil.format(data.MA10Volume!) : data.MA10Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
-              style: getTextStyle(this.chartColors.getMAColor(1))),
+          text: "VOL:${format(data.vol)} ",
+          style: getTextStyle(this.chartColors.volColor),
+        ),
+        ...volumeMaDayList
+            .map((day) {
+              final maValue = _getVolumeMAValue(data, day);
+              if (maValue == 0) return null;
+              return TextSpan(
+                text: "MA${day}:${format(maValue)} ",
+                style: getTextStyle(
+                    this.chartColors.getMAColor(volumeMaDayList.indexOf(day))),
+              );
+            })
+            .whereType<TextSpan>()
+            .toList(),
       ],
     );
     TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);

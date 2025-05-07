@@ -43,6 +43,7 @@ class ChartPainter extends BaseChartPainter {
   int fixedLength;
   List<int> maDayList;
   List<int> emaDayList;
+  List<int> volumeMaDayList;
   final ChartColors chartColors;
   late Paint selectPointPaint, selectorBorderPaint, nowPricePaint;
   final ChartStyle chartStyle;
@@ -77,6 +78,7 @@ class ChartPainter extends BaseChartPainter {
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
     this.emaDayList = const [5, 10, 20],
+    this.volumeMaDayList = const [5, 10],
   }) : super(chartStyle,
             datas: datas,
             scaleX: scaleX,
@@ -128,8 +130,16 @@ class ChartPainter extends BaseChartPainter {
       emaDayList,
     );
     if (mVolRect != null) {
-      mVolRenderer = VolRenderer(mVolRect!, mVolMaxValue, mVolMinValue,
-          mChildPadding, fixedLength, this.chartStyle, this.chartColors);
+      mVolRenderer = VolRenderer(
+        mVolRect!,
+        mVolMaxValue,
+        mVolMinValue,
+        mChildPadding,
+        fixedLength,
+        this.chartStyle,
+        this.chartColors,
+        volumeMaDayList,
+      );
     }
     mSecondaryRendererList.clear();
     for (int i = 0; i < mSecondaryRectList.length; ++i) {
