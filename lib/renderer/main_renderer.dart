@@ -85,19 +85,23 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
           TextSpan(
               text:
                   "BOLL(${chartStyle.bollPeriod}, ${chartStyle.bollBandwidth.toStringAsFixed(1)}) ",
-              style: getTextStyle(this.chartColors.defaultTextColor)),
+              style: getTextStyle(chartColors.indicatorColors?[0] ??
+                  chartColors.defaultTextColor)),
           if (data.up != 0)
             TextSpan(
                 text: "UP:${format(data.up)} ",
-                style: getTextStyle(this.chartColors.ma10Color)),
+                style: getTextStyle(
+                    chartColors.indicatorColors?[1] ?? chartColors.ma10Color)),
           if (data.mb != 0)
             TextSpan(
                 text: "MB:${format(data.mb)} ",
-                style: getTextStyle(this.chartColors.ma5Color)),
+                style: getTextStyle(
+                    chartColors.indicatorColors?[2] ?? chartColors.ma5Color)),
           if (data.dn != 0)
             TextSpan(
                 text: "DN:${format(data.dn)}",
-                style: getTextStyle(this.chartColors.ma30Color)),
+                style: getTextStyle(
+                    chartColors.indicatorColors?[3] ?? chartColors.ma30Color)),
         ],
       );
     } else if (state == MainState.EMA) {
@@ -111,7 +115,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
             TextSpan(
                 text:
                     "SAR(${chartStyle.sarStart.toStringAsFixed(2)}, ${chartStyle.sarMaximum.toStringAsFixed(2)}): ${format(data.sar)}    ",
-                style: getTextStyle(this.chartColors.ma5Color)),
+                style: getTextStyle(
+                    chartColors.indicatorColors?[0] ?? chartColors.ma5Color)),
         ],
       );
     } else if (state == MainState.AVL) {
@@ -248,15 +253,15 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       Canvas canvas, double lastX, double curX) {
     if (lastPoint.up != 0) {
       drawLine(lastPoint.up, curPoint.up, canvas, lastX, curX,
-          this.chartColors.ma10Color);
+          chartColors.indicatorColors?[1] ?? chartColors.ma10Color);
     }
     if (lastPoint.mb != 0) {
       drawLine(lastPoint.mb, curPoint.mb, canvas, lastX, curX,
-          this.chartColors.ma5Color);
+          chartColors.indicatorColors?[2] ?? chartColors.ma5Color);
     }
     if (lastPoint.dn != 0) {
       drawLine(lastPoint.dn, curPoint.dn, canvas, lastX, curX,
-          this.chartColors.ma30Color);
+          chartColors.indicatorColors?[3] ?? chartColors.ma30Color);
     }
   }
 
@@ -275,7 +280,10 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     if (curPoint.sar != 0) {
       double y = getY(curPoint.sar!);
       canvas.drawCircle(
-          Offset(curX, y), 2.0, Paint()..color = this.chartColors.ma5Color);
+          Offset(curX, y),
+          2.0,
+          Paint()
+            ..color = chartColors.indicatorColors?[0] ?? chartColors.ma5Color);
     }
   }
 
@@ -290,7 +298,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         Offset(lastX, lastY),
         Offset(curX, curY),
         Paint()
-          ..color = this.chartColors.avlColor
+          ..color = chartColors.indicatorColors?[0] ?? chartColors.avlColor
           ..strokeWidth = this.chartStyle.lineWidth
           ..isAntiAlias = true);
   }
