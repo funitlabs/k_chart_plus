@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show Color;
+import 'package:flutter/material.dart';
 
 /// ChartColors
 ///
@@ -92,55 +92,48 @@ class ChartColors {
   final Color maxColor;
   final Color minColor;
 
-  final List<Color>? indicatorColors;
+  List<Color>? indicatorColors = [
+    Colors.orange,
+    Colors.pink,
+    Colors.deepPurple,
+    Colors.greenAccent,
+    Colors.brown,
+    Colors.teal,
+    Colors.indigo,
+    Colors.lightGreen,
+    Colors.deepOrange,
+    Colors.deepPurple,
+  ];
 
   /// get MA color via index
   Color getMAColor(int index) {
     if (indicatorColors != null && indicatorColors!.isNotEmpty) {
-      return indicatorColors![index % indicatorColors!.length];
-    }
-    switch (index) {
-      case 0:
-        return ma5Color;
-      case 1:
-        return ma10Color;
-      case 2:
-        return ma30Color;
-      case 3:
-        return ma60Color;
-      case 4:
-        return ma90Color;
-      case 5:
-        return ma120Color;
-      case 6:
-        return ma250Color;
-      case 7:
-        return ma360Color;
-      case 8:
-        return ma720Color;
-      case 9:
-        return ma1080Color;
-      default:
-        return ma1440Color;
-    }
-  }
-
-  /// get indicator color via index
-  Color getIndicatorColor(int index) {
-    if (indicatorColors != null && indicatorColors!.isNotEmpty) {
-      return indicatorColors![index % indicatorColors!.length];
-    }
-    switch (index) {
-      case 0:
-        return ma5Color;
-      case 1:
-        return ma10Color;
-      case 2:
-        return ma30Color;
-      case 3:
-        return ma60Color;
-      default:
-        return ma5Color;
+      return indicatorColors![index];
+    } else {
+      switch (index) {
+        case 0:
+          return ma5Color;
+        case 1:
+          return ma10Color;
+        case 2:
+          return ma30Color;
+        case 3:
+          return ma60Color;
+        case 4:
+          return ma90Color;
+        case 5:
+          return ma120Color;
+        case 6:
+          return ma250Color;
+        case 7:
+          return ma360Color;
+        case 8:
+          return ma720Color;
+        case 9:
+          return ma1080Color;
+        default:
+          return ma1440Color;
+      }
     }
   }
 
