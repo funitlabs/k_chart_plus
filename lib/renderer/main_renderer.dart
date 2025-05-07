@@ -105,7 +105,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         children: [
           if (data.sar != 0)
             TextSpan(
-                text: "SAR:${format(data.sar)}    ",
+                text:
+                    "SAR(${chartStyle.sarStart.toStringAsFixed(2)}, ${chartStyle.sarMaximum.toStringAsFixed(2)}): ${format(data.sar)}    ",
                 style: getTextStyle(this.chartColors.ma5Color)),
         ],
       );

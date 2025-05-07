@@ -204,4 +204,30 @@ class ChartStyle {
   List<String>? dateTimeFormat;
 
   double lineWidth = 1.0;
+
+  /// SAR parameters
+  double sarStart = 0.02;
+  double sarMaximum = 0.2;
+
+  ChartStyle({
+    this.topPadding = 30.0,
+    this.bottomPadding = 20.0,
+    this.childPadding = 12.0,
+    this.pointWidth = 11.0,
+    this.candleWidth = 8.5,
+    this.candleLineWidth = 1.0,
+    this.volWidth = 8.5,
+    this.macdWidth = 1.2,
+    this.vCrossWidth = 8.5,
+    this.hCrossWidth = 0.5,
+    this.nowPriceLineLength = 4.5,
+    this.nowPriceLineSpan = 3.5,
+    this.nowPriceLineWidth = 1,
+    this.gridRows = 4,
+    this.gridColumns = 4,
+    this.dateTimeFormat,
+    this.lineWidth = 1.0,
+    this.sarStart = 0.02,
+    this.sarMaximum = 0.2,
+  });
 }
