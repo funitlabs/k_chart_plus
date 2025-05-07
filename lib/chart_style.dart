@@ -132,15 +132,15 @@ class ChartColors {
     }
     switch (index) {
       case 0:
-        return defaultTextColor;
+        return ma5Color;
       case 1:
         return ma10Color;
       case 2:
-        return ma5Color;
-      case 3:
         return ma30Color;
+      case 3:
+        return ma60Color;
       default:
-        return defaultTextColor;
+        return ma5Color;
     }
   }
 
