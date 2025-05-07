@@ -27,9 +27,16 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     mVolWidth = this.chartStyle.volWidth;
   }
 
+  double _getVolumeMAValue(VolumeEntity point, int day) {
+    if (point == null) return 0;
+    return point.getMAVolume(day) ?? 0;
+  }
+
   @override
   void drawChart(VolumeEntity lastPoint, VolumeEntity curPoint, double lastX,
       double curX, Size size, Canvas canvas) {
+    if (curPoint == null) return;
+
     double r = mVolWidth / 2;
     double top = getVolY(curPoint.vol);
     double bottom = chartRect.bottom;
@@ -42,28 +49,17 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
                 : this.chartColors.dnColor);
     }
 
+    // volumeMaDayList에 있는 기간에 대해서만 MA 라인을 그립니다
     for (int i = 0; i < volumeMaDayList.length; i++) {
-      final maValue = _getVolumeMAValue(curPoint, volumeMaDayList[i]);
-      final lastMaValue = _getVolumeMAValue(lastPoint, volumeMaDayList[i]);
+      final day = volumeMaDayList[i];
+      final maValue = _getVolumeMAValue(curPoint, day);
+      final lastMaValue = _getVolumeMAValue(lastPoint, day);
       if (lastMaValue != 0 && maValue != 0) {
+        // indicatorColors의 인덱스를 순환하여 사용 (0~3)
+        final colorIndex = i % 4;
         drawLine(lastMaValue, maValue, canvas, lastX, curX,
-            this.chartColors.getMAColor(i));
+            this.chartColors.getMAColor(colorIndex));
       }
-    }
-  }
-
-  double _getVolumeMAValue(VolumeEntity point, int day) {
-    switch (day) {
-      case 5:
-        return point.MA5Volume ?? 0;
-      case 10:
-        return point.MA10Volume ?? 0;
-      case 20:
-        return point.MA20Volume ?? 0;
-      case 30:
-        return point.MA30Volume ?? 0;
-      default:
-        return 0;
     }
   }
 
@@ -72,7 +68,8 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
   @override
   void drawText(Canvas canvas, VolumeEntity data, double x) {
-    if (data.vol == 0) return;
+    if (data == null || data.vol == 0) return;
+
     TextSpan span = TextSpan(
       children: [
         TextSpan(
@@ -80,13 +77,19 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
           style: getTextStyle(this.chartColors.volColor),
         ),
         ...volumeMaDayList
-            .map((day) {
+            .asMap()
+            .entries
+            .map((entry) {
+              final index = entry.key;
+              final day = entry.value;
               final maValue = _getVolumeMAValue(data, day);
               if (maValue == 0) return null;
+
+              // indicatorColors의 인덱스를 순환하여 사용 (0~3)
+              final colorIndex = index % 4;
               return TextSpan(
-                text: "MA${day}:${format(maValue)} ",
-                style: getTextStyle(
-                    this.chartColors.getMAColor(volumeMaDayList.indexOf(day))),
+                text: "MA$day:${format(maValue)} ",
+                style: getTextStyle(this.chartColors.getMAColor(colorIndex)),
               );
             })
             .whereType<TextSpan>()

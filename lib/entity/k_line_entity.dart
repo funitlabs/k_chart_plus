@@ -10,6 +10,14 @@ class KLineEntity extends KEntity {
   double? change;
   double? ratio;
   int? time;
+  KLineEntity? previous;
+  double? totalVolume;
+  double? totalAmount;
+  double? avl;
+  double? sar;
+  List<double>? maValueList;
+  List<double>? emaValueList;
+  List<int>? volumeMaDayList;
 
   KLineEntity.fromCustom({
     this.amount,
@@ -58,5 +66,32 @@ class KLineEntity extends KEntity {
   @override
   String toString() {
     return 'MarketModel{open: $open, high: $high, low: $low, close: $close, vol: $vol, time: $time, amount: $amount, ratio: $ratio, change: $change}';
+  }
+
+  // 거래량 MA 계산
+  void calculateVolumeMA(List<int> maDayList) {
+    if (maDayList == null || maDayList.isEmpty) return;
+
+    for (int day in maDayList) {
+      double maValue = calculateMA(day, (e) => e.vol);
+      setMAVolume(day, maValue);
+    }
+  }
+
+  // MA 계산 헬퍼 메서드
+  double calculateMA(int day, double Function(KLineEntity) valueSelector) {
+    if (day <= 0) return 0;
+
+    double sum = 0;
+    int count = 0;
+    KLineEntity? current = this;
+
+    for (int i = 0; i < day && current != null; i++) {
+      sum += valueSelector(current);
+      count++;
+      current = current.previous;
+    }
+
+    return count > 0 ? sum / count : 0;
   }
 }

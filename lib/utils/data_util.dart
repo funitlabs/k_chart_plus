@@ -120,32 +120,19 @@ class DataUtil {
   }
 
   static void calcVolumeMA(List<KLineEntity> dataList) {
-    double volumeMa5 = 0;
-    double volumeMa10 = 0;
+    if (dataList.isEmpty) return;
 
+    // 각 데이터 포인트에 대해 MA 값을 계산
     for (int i = 0; i < dataList.length; i++) {
-      KLineEntity entry = dataList[i];
+      KLineEntity entity = dataList[i];
 
-      volumeMa5 += entry.vol;
-      volumeMa10 += entry.vol;
-
-      if (i == 4) {
-        entry.MA5Volume = (volumeMa5 / 5);
-      } else if (i > 4) {
-        volumeMa5 -= dataList[i - 5].vol;
-        entry.MA5Volume = volumeMa5 / 5;
-      } else {
-        entry.MA5Volume = 0;
+      // 이전 데이터 포인트 연결
+      if (i > 0) {
+        entity.previous = dataList[i - 1];
       }
 
-      if (i == 9) {
-        entry.MA10Volume = volumeMa10 / 10;
-      } else if (i > 9) {
-        volumeMa10 -= dataList[i - 10].vol;
-        entry.MA10Volume = volumeMa10 / 10;
-      } else {
-        entry.MA10Volume = 0;
-      }
+      // MA 값 계산
+      entity.calculateVolumeMA([5, 10, 20, 30]);
     }
   }
 
