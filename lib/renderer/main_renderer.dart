@@ -105,6 +105,10 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
                 style: getTextStyle(this.chartColors.ma5Color)),
         ],
       );
+    } else if (state == MainState.AVL) {
+      span = TextSpan(
+        children: _createAVLTextSpan(data),
+      );
     }
     if (span == null) return;
     TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);
@@ -145,6 +149,26 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     return result;
   }
 
+  List<InlineSpan> _createAVLTextSpan(CandleEntity data) {
+    List<InlineSpan> result = [];
+    if (data.avl5 != 0) {
+      result.add(TextSpan(
+          text: "AVL5:${format(data.avl5)}    ",
+          style: getTextStyle(this.chartColors.ma5Color)));
+    }
+    if (data.avl10 != 0) {
+      result.add(TextSpan(
+          text: "AVL10:${format(data.avl10)}    ",
+          style: getTextStyle(this.chartColors.ma10Color)));
+    }
+    if (data.avl20 != 0) {
+      result.add(TextSpan(
+          text: "AVL20:${format(data.avl20)}    ",
+          style: getTextStyle(this.chartColors.ma30Color)));
+    }
+    return result;
+  }
+
   @override
   void drawChart(CandleEntity lastPoint, CandleEntity curPoint, double lastX,
       double curX, Size size, Canvas canvas) {
@@ -160,6 +184,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         drawEMALine(lastPoint, curPoint, canvas, lastX, curX);
       } else if (state == MainState.SAR) {
         drawSARPoint(curPoint, canvas, curX);
+      } else if (state == MainState.AVL) {
+        drawAVLLine(lastPoint, curPoint, canvas, lastX, curX);
       }
     }
   }
@@ -268,6 +294,22 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       double y = getY(curPoint.sar!);
       canvas.drawCircle(
           Offset(curX, y), 2.0, Paint()..color = this.chartColors.ma5Color);
+    }
+  }
+
+  void drawAVLLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
+      double lastX, double curX) {
+    if (lastPoint.avl5 != 0 && curPoint.avl5 != 0) {
+      drawLine(lastPoint.avl5, curPoint.avl5, canvas, lastX, curX,
+          this.chartColors.ma5Color);
+    }
+    if (lastPoint.avl10 != 0 && curPoint.avl10 != 0) {
+      drawLine(lastPoint.avl10, curPoint.avl10, canvas, lastX, curX,
+          this.chartColors.ma10Color);
+    }
+    if (lastPoint.avl20 != 0 && curPoint.avl20 != 0) {
+      drawLine(lastPoint.avl20, curPoint.avl20, canvas, lastX, curX,
+          this.chartColors.ma30Color);
     }
   }
 

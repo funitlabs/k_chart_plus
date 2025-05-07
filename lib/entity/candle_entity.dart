@@ -4,6 +4,7 @@ mixin CandleEntity {
   late double high;
   late double low;
   late double close;
+  late double vol;
 
   List<double>? maValueList;
 
@@ -22,4 +23,9 @@ mixin CandleEntity {
   double? ema10;
   double? ema20;
   double? sar;
+
+  // Average Volume Line
+  double? avl5;
+  double? avl10;
+  double? avl20;
 }

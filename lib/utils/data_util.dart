@@ -15,6 +15,7 @@ class DataUtil {
     calcCCI(dataList);
     calculateEMA(dataList);
     calculateSAR(dataList);
+    calculateAVL(dataList);
   }
 
   static calcMA(List<KLineEntity> dataList, List<int> maDayList) {
@@ -322,6 +323,28 @@ class DataUtil {
         }
       }
       entity.sar = sar;
+    }
+  }
+
+  static void calculateAVL(List<KLineEntity> dataList) {
+    double avl5 = 0.0;
+    double avl10 = 0.0;
+    double avl20 = 0.0;
+
+    for (int i = 0; i < dataList.length; i++) {
+      KLineEntity entity = dataList[i];
+      if (i == 0) {
+        avl5 = entity.vol;
+        avl10 = entity.vol;
+        avl20 = entity.vol;
+      } else {
+        avl5 = (avl5 * 4 + entity.vol) / 5;
+        avl10 = (avl10 * 9 + entity.vol) / 10;
+        avl20 = (avl20 * 19 + entity.vol) / 20;
+      }
+      entity.avl5 = avl5;
+      entity.avl10 = avl10;
+      entity.avl20 = avl20;
     }
   }
 }

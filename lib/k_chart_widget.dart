@@ -5,7 +5,7 @@ import 'package:k_chart_plus/components/popup_info_view.dart';
 import 'package:k_chart_plus/k_chart_plus.dart';
 import 'renderer/base_dimension.dart';
 
-enum MainState { MA, BOLL, EMA, SAR, NONE }
+enum MainState { MA, BOLL, EMA, SAR, AVL, NONE }
 
 // enum SecondaryState { MACD, KDJ, RSI, WR, CCI, NONE }
 enum SecondaryState { MACD, KDJ, RSI, WR, CCI } //no support NONE
