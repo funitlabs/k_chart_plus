@@ -21,6 +21,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   late Rect _contentRect;
   double _contentPadding = 5.0;
   List<int> maDayList;
+  List<int> emaDayList;
   final ChartStyle chartStyle;
   final ChartColors chartColors;
   final double mLineStrokeWidth = 1.0;
@@ -40,7 +41,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       this.chartColors,
       this.scaleX,
       this.verticalTextAlignment,
-      [this.maDayList = const [5, 10, 20]])
+      [this.maDayList = const [5, 10, 20],
+      this.emaDayList = const [5, 10, 20]])
       : super(
             chartRect: mainRect,
             maxValue: maxValue,
@@ -131,20 +133,12 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   List<InlineSpan> _createEMATextSpan(CandleEntity data) {
     List<InlineSpan> result = [];
-    if (data.ema5 != 0) {
-      result.add(TextSpan(
-          text: "EMA5:${format(data.ema5)}    ",
-          style: getTextStyle(this.chartColors.ma5Color)));
-    }
-    if (data.ema10 != 0) {
-      result.add(TextSpan(
-          text: "EMA10:${format(data.ema10)}    ",
-          style: getTextStyle(this.chartColors.ma10Color)));
-    }
-    if (data.ema20 != 0) {
-      result.add(TextSpan(
-          text: "EMA20:${format(data.ema20)}    ",
-          style: getTextStyle(this.chartColors.ma30Color)));
+    for (int i = 0; i < (data.emaValueList?.length ?? 0); i++) {
+      if (data.emaValueList?[i] != 0) {
+        result.add(TextSpan(
+            text: "EMA${emaDayList[i]}:${format(data.emaValueList![i])}    ",
+            style: getTextStyle(this.chartColors.getMAColor(i))));
+      }
     }
     return result;
   }
@@ -275,17 +269,11 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawEMALine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
-    if (lastPoint.ema5 != 0 && curPoint.ema5 != 0) {
-      drawLine(lastPoint.ema5, curPoint.ema5, canvas, lastX, curX,
-          this.chartColors.ma5Color);
-    }
-    if (lastPoint.ema10 != 0 && curPoint.ema10 != 0) {
-      drawLine(lastPoint.ema10, curPoint.ema10, canvas, lastX, curX,
-          this.chartColors.ma10Color);
-    }
-    if (lastPoint.ema20 != 0 && curPoint.ema20 != 0) {
-      drawLine(lastPoint.ema20, curPoint.ema20, canvas, lastX, curX,
-          this.chartColors.ma30Color);
+    for (int i = 0; i < (curPoint.emaValueList?.length ?? 0); i++) {
+      if (lastPoint.emaValueList?[i] != 0 && curPoint.emaValueList?[i] != 0) {
+        drawLine(lastPoint.emaValueList?[i], curPoint.emaValueList?[i], canvas,
+            lastX, curX, this.chartColors.getMAColor(i));
+      }
     }
   }
 

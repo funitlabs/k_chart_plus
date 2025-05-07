@@ -7,6 +7,7 @@ mixin CandleEntity {
   late double vol;
 
   List<double>? maValueList;
+  List<double>? emaValueList; // EMA 값을 저장할 리스트로 변경
 
 //  上轨线
   double? up;

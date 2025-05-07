@@ -4,7 +4,10 @@ import '../entity/index.dart';
 
 class DataUtil {
   static calculate(List<KLineEntity> dataList,
-      [List<int> maDayList = const [5, 10, 20], int n = 20, k = 2]) {
+      [List<int> maDayList = const [5, 10, 20],
+      List<int> emaDayList = const [5, 10, 20],
+      int n = 20,
+      k = 2]) {
     calcMA(dataList, maDayList);
     calcBOLL(dataList, n, k);
     calcVolumeMA(dataList);
@@ -13,7 +16,7 @@ class DataUtil {
     calcRSI(dataList);
     calcWR(dataList);
     calcCCI(dataList);
-    calculateEMA(dataList);
+    calculateEMA(dataList, emaDayList);
     calculateSAR(dataList);
     calculateAVL(dataList);
   }
@@ -255,28 +258,26 @@ class DataUtil {
     }
   }
 
-  static void calculateEMA(List<KLineEntity> dataList) {
-    double k1 = 2.0 / (5 + 1);
-    double k2 = 2.0 / (10 + 1);
-    double k3 = 2.0 / (20 + 1);
-    double ema5 = 0.0;
-    double ema10 = 0.0;
-    double ema20 = 0.0;
+  static void calculateEMA(List<KLineEntity> dataList,
+      [List<int> emaDayList = const [5, 10, 20]]) {
+    List<double> ema = List<double>.filled(emaDayList.length, 0.0);
+    List<double> k = emaDayList.map((day) => 2.0 / (day + 1)).toList();
 
     for (int i = 0; i < dataList.length; i++) {
       KLineEntity entity = dataList[i];
+      entity.emaValueList = List<double>.filled(emaDayList.length, 0.0);
+
       if (i == 0) {
-        ema5 = entity.close;
-        ema10 = entity.close;
-        ema20 = entity.close;
+        for (int j = 0; j < emaDayList.length; j++) {
+          ema[j] = entity.close;
+          entity.emaValueList?[j] = ema[j];
+        }
       } else {
-        ema5 = ema5 * (1 - k1) + entity.close * k1;
-        ema10 = ema10 * (1 - k2) + entity.close * k2;
-        ema20 = ema20 * (1 - k3) + entity.close * k3;
+        for (int j = 0; j < emaDayList.length; j++) {
+          ema[j] = ema[j] * (1 - k[j]) + entity.close * k[j];
+          entity.emaValueList?[j] = ema[j];
+        }
       }
-      entity.ema5 = ema5;
-      entity.ema10 = ema10;
-      entity.ema20 = ema20;
     }
   }
 
