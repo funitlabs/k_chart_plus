@@ -209,6 +209,10 @@ class ChartStyle {
   double sarStart = 0.02;
   double sarMaximum = 0.2;
 
+  /// BOLL parameters
+  int bollPeriod = 20;
+  double bollBandwidth = 2.0;
+
   ChartStyle({
     this.topPadding = 30.0,
     this.bottomPadding = 20.0,
@@ -229,5 +233,7 @@ class ChartStyle {
     this.lineWidth = 1.0,
     this.sarStart = 0.02,
     this.sarMaximum = 0.2,
+    this.bollPeriod = 20,
+    this.bollBandwidth = 2.0,
   });
 }

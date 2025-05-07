@@ -10,9 +10,11 @@ class DataUtil {
       int n = 20,
       k = 2,
       double sarStart = 0.02,
-      double sarMaximum = 0.2]) {
+      double sarMaximum = 0.2,
+      int bollPeriod = 20,
+      double bollBandwidth = 2.0]) {
     calcMA(dataList, maDayList);
-    calcBOLL(dataList, n, k);
+    calcBOLL(dataList, bollPeriod, bollBandwidth);
     calcVolumeMA(dataList);
     calcKDJ(dataList);
     calcMACD(dataList);
@@ -48,23 +50,24 @@ class DataUtil {
     }
   }
 
-  static void calcBOLL(List<KLineEntity> dataList, int n, int k) {
-    _calcBOLLMA(n, dataList);
+  static void calcBOLL(
+      List<KLineEntity> dataList, int period, double bandwidth) {
+    _calcBOLLMA(period, dataList);
     for (int i = 0; i < dataList.length; i++) {
       KLineEntity entity = dataList[i];
-      if (i >= n) {
+      if (i >= period) {
         double md = 0;
-        for (int j = i - n + 1; j <= i; j++) {
+        for (int j = i - period + 1; j <= i; j++) {
           double c = dataList[j].close;
           double m = entity.BOLLMA!;
           double value = c - m;
           md += value * value;
         }
-        md = md / (n - 1);
+        md = md / (period - 1);
         md = sqrt(md);
         entity.mb = entity.BOLLMA!;
-        entity.up = entity.mb! + k * md;
-        entity.dn = entity.mb! - k * md;
+        entity.up = entity.mb! + bandwidth * md;
+        entity.dn = entity.mb! - bandwidth * md;
       }
     }
   }
