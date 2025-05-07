@@ -54,17 +54,17 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
       children: [
         TextSpan(
             text:
-                "VOL:${data.vol.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
+                "VOL:${data.vol >= 1000 ? NumberUtil.format(data.vol) : data.vol.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
             style: getTextStyle(this.chartColors.volColor)),
         if (data.MA5Volume.notNullOrZero)
           TextSpan(
               text:
-                  "MA(5):${data.MA5Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
+                  "MA(5):${data.MA5Volume! >= 1000 ? NumberUtil.format(data.MA5Volume!) : data.MA5Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
               style: getTextStyle(this.chartColors.ma5Color)),
         if (data.MA10Volume.notNullOrZero)
           TextSpan(
               text:
-                  "MA(10):${data.MA10Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
+                  "MA(10):${data.MA10Volume! >= 1000 ? NumberUtil.format(data.MA10Volume!) : data.MA10Volume!.toStringAsFixed(chartStyle.volDecimalPlaces)}    ",
               style: getTextStyle(this.chartColors.ma10Color)),
       ],
     );
