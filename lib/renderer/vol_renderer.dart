@@ -55,10 +55,8 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
       final maValue = _getVolumeMAValue(curPoint, day);
       final lastMaValue = _getVolumeMAValue(lastPoint, day);
       if (lastMaValue != 0 && maValue != 0) {
-        // indicatorColors의 인덱스를 순환하여 사용 (0~3)
-        final colorIndex = i % 4;
         drawLine(lastMaValue, maValue, canvas, lastX, curX,
-            this.chartColors.getMAColor(colorIndex));
+            this.chartColors.getMAColor(i));
       }
     }
   }
@@ -86,10 +84,9 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
               if (maValue == 0) return null;
 
               // indicatorColors의 인덱스를 순환하여 사용 (0~3)
-              final colorIndex = index % 4;
               return TextSpan(
-                text: "MA$day:${format(maValue)} ",
-                style: getTextStyle(this.chartColors.getMAColor(colorIndex)),
+                text: "MA($day):${NumberUtil.format(maValue)} ",
+                style: getTextStyle(this.chartColors.getMAColor(index)),
               );
             })
             .whereType<TextSpan>()

@@ -15,7 +15,7 @@ class DataUtil {
       double bollBandwidth = 2.0]) {
     calcMA(dataList, maDayList);
     calcBOLL(dataList, bollPeriod, bollBandwidth);
-    calcVolumeMA(dataList);
+    calcVolumeMA(dataList, avlDayList);
     calcKDJ(dataList);
     calcMACD(dataList);
     calcRSI(dataList);
@@ -119,7 +119,8 @@ class DataUtil {
     }
   }
 
-  static void calcVolumeMA(List<KLineEntity> dataList) {
+  static void calcVolumeMA(
+      List<KLineEntity> dataList, List<int> volumeMaDayList) {
     if (dataList.isEmpty) return;
 
     // 각 데이터 포인트에 대해 MA 값을 계산
@@ -132,7 +133,8 @@ class DataUtil {
       }
 
       // MA 값 계산
-      entity.calculateVolumeMA([5, 10, 20, 30]);
+      entity.volumeMaDayList = volumeMaDayList;
+      entity.calculateVolumeMA(volumeMaDayList);
     }
   }
 
