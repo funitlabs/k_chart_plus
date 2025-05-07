@@ -4,6 +4,9 @@ import 'package:k_chart_plus/chart_translations.dart';
 import '../entity/k_line_entity.dart';
 import '../utils/date_format_util.dart';
 import '../utils/number_util.dart';
+import '../k_chart_plus.dart';
+import '../chart_translations.dart';
+import '../k_chart_widget.dart';
 
 class PopupInfoView extends StatelessWidget {
   final KLineEntity entity;
@@ -13,17 +16,18 @@ class PopupInfoView extends StatelessWidget {
   final bool materialInfoDialog;
   final List<String> timeFormat;
   final int fixedLength;
+  final int volDecimalPlaces;
 
-  const PopupInfoView({
-    Key? key,
-    required this.entity,
-    required this.width,
-    required this.chartColors,
-    required this.chartTranslations,
-    required this.materialInfoDialog,
-    required this.timeFormat,
-    required this.fixedLength,
-  }) : super(key: key);
+  PopupInfoView(
+    this.entity,
+    this.width,
+    this.chartColors,
+    this.chartTranslations, {
+    this.materialInfoDialog = true,
+    this.timeFormat = TimeFormat.YEAR_MONTH_DAY,
+    this.fixedLength = 2,
+    this.volDecimalPlaces = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,8 @@ class PopupInfoView extends StatelessWidget {
             upDown.toStringAsFixed(fixedLength), upDown > 0),
         _buildColorItem(chartTranslations.change,
             '${upDownPercent.toStringAsFixed(2)}%', upDownPercent > 0),
-        _buildItem(chartTranslations.vol, NumberUtil.format(entity.vol)),
+        _buildItem(chartTranslations.vol,
+            NumberUtil.format(entity.vol, volDecimalPlaces)),
         if (entityAmount != null)
           _buildItem(chartTranslations.amount, entityAmount.toInt().toString()),
       ],

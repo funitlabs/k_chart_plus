@@ -30,30 +30,18 @@ class KChartWidget extends StatefulWidget {
   final MainState mainState;
   final bool volHidden;
   final Set<SecondaryState> secondaryStateLi;
-  // final Function()? onSecondaryTap;
   final bool isLine;
-  final bool
-      isTapShowInfoDialog; //Whether to enable click to display detailed data
+  final bool isTapShowInfoDialog;
   final bool hideGrid;
   final bool showNowPrice;
   final bool showInfoDialog;
-  final bool materialInfoDialog; // Material Style Information Popup
   final ChartTranslations chartTranslations;
   final List<String> timeFormat;
   final double mBaseHeight;
-
-  // It will be called when the screen scrolls to the end.
-  // If true, it will be scrolled to the end of the right side of the screen.
-  // If it is false, it will be scrolled to the end of the left side of the screen.
   final Function(bool)? onLoadMore;
-
   final int fixedLength;
   final List<int> maDayList;
   final List<int> emaDayList;
-  final int flingTime;
-  final double flingRatio;
-  final Curve flingCurve;
-  final Function(bool)? isOnDrag;
   final ChartColors chartColors;
   final ChartStyle chartStyle;
   final VerticalTextAlignment verticalTextAlignment;
@@ -69,24 +57,18 @@ class KChartWidget extends StatefulWidget {
     this.xFrontPadding = 100,
     this.mainState = MainState.MA,
     this.secondaryStateLi = const <SecondaryState>{},
-    // this.onSecondaryTap,
     this.volHidden = false,
     this.isLine = false,
     this.isTapShowInfoDialog = false,
     this.hideGrid = false,
     this.showNowPrice = true,
     this.showInfoDialog = true,
-    this.materialInfoDialog = true,
     this.chartTranslations = const ChartTranslations(),
     this.timeFormat = TimeFormat.YEAR_MONTH_DAY,
     this.onLoadMore,
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
     this.emaDayList = const [5, 10, 20],
-    this.flingTime = 600,
-    this.flingRatio = 0.5,
-    this.flingCurve = Curves.decelerate,
-    this.isOnDrag,
     this.verticalTextAlignment = VerticalTextAlignment.left,
     this.mBaseHeight = 360,
     this.volDecimalPlaces = 0,
@@ -210,10 +192,6 @@ class _KChartWidgetState extends State<KChartWidget>
         mWidth = constraints.maxWidth;
         return GestureDetector(
           onTapUp: (details) {
-            // if (!widget.isTrendLine && widget.onSecondaryTap != null && _painter.isInSecondaryRect(details.localPosition)) {
-            //   widget.onSecondaryTap!();
-            // }
-
             if (!widget.isTrendLine &&
                 _painter.isInMainRect(details.localPosition)) {
               isOnTap = true;
@@ -343,18 +321,14 @@ class _KChartWidgetState extends State<KChartWidget>
 
   void _onDragChanged(bool isOnDrag) {
     isDrag = isOnDrag;
-    if (widget.isOnDrag != null) {
-      widget.isOnDrag!(isDrag);
-    }
   }
 
   void _onFling(double x) {
-    _controller = AnimationController(
-        duration: Duration(milliseconds: widget.flingTime), vsync: this);
+    _controller =
+        AnimationController(duration: Duration(milliseconds: 600), vsync: this);
     aniX = null;
-    aniX = Tween<double>(begin: mScrollX, end: x * widget.flingRatio + mScrollX)
-        .animate(CurvedAnimation(
-            parent: _controller!.view, curve: widget.flingCurve));
+    aniX = Tween<double>(begin: mScrollX, end: x * 0.5 + mScrollX).animate(
+        CurvedAnimation(parent: _controller!.view, curve: Curves.decelerate));
     aniX!.addListener(() {
       mScrollX = aniX!.value;
       if (mScrollX <= 0) {
@@ -401,13 +375,13 @@ class _KChartWidgetState extends State<KChartWidget>
             top: 25,
             left: 10.0,
             child: PopupInfoView(
-              entity: entity,
-              width: dialogWidth,
-              chartColors: widget.chartColors,
-              chartTranslations: widget.chartTranslations,
-              materialInfoDialog: widget.materialInfoDialog,
+              entity,
+              dialogWidth,
+              widget.chartColors,
+              widget.chartTranslations,
               timeFormat: widget.timeFormat,
               fixedLength: widget.fixedLength,
+              volDecimalPlaces: widget.volDecimalPlaces,
             ),
           );
         }
@@ -415,13 +389,13 @@ class _KChartWidgetState extends State<KChartWidget>
           top: 25,
           right: 10.0,
           child: PopupInfoView(
-            entity: entity,
-            width: dialogWidth,
-            chartColors: widget.chartColors,
-            chartTranslations: widget.chartTranslations,
-            materialInfoDialog: widget.materialInfoDialog,
+            entity,
+            dialogWidth,
+            widget.chartColors,
+            widget.chartTranslations,
             timeFormat: widget.timeFormat,
             fixedLength: widget.fixedLength,
+            volDecimalPlaces: widget.volDecimalPlaces,
           ),
         );
       },
