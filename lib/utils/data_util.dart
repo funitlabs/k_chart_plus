@@ -8,7 +8,9 @@ class DataUtil {
       List<int> emaDayList = const [5, 10, 20],
       List<int> avlDayList = const [5, 10, 20],
       int n = 20,
-      k = 2]) {
+      k = 2,
+      double sarStart = 0.02,
+      double sarMaximum = 0.2]) {
     calcMA(dataList, maDayList);
     calcBOLL(dataList, n, k);
     calcVolumeMA(dataList);
@@ -18,7 +20,7 @@ class DataUtil {
     calcWR(dataList);
     calcCCI(dataList);
     calculateEMA(dataList, emaDayList);
-    calculateSAR(dataList);
+    calculateSAR(dataList, start: sarStart, maximum: sarMaximum);
     calculateAVL(dataList);
   }
 
@@ -282,9 +284,10 @@ class DataUtil {
     }
   }
 
-  static void calculateSAR(List<KLineEntity> dataList) {
-    double acceleration = 0.02;
-    double maximum = 0.2;
+  static void calculateSAR(List<KLineEntity> dataList,
+      {double start = 0.02, double maximum = 0.2}) {
+    double acceleration = start;
+    double maxAcceleration = maximum;
     double sar = 0.0;
     bool isLong = true;
     double ep = 0.0;
@@ -305,7 +308,7 @@ class DataUtil {
           } else {
             if (entity.high > ep) {
               ep = entity.high;
-              af = min(af + acceleration, maximum);
+              af = min(af + acceleration, maxAcceleration);
             }
             sar = sar + af * (ep - sar);
           }
@@ -318,7 +321,7 @@ class DataUtil {
           } else {
             if (entity.low < ep) {
               ep = entity.low;
-              af = min(af + acceleration, maximum);
+              af = min(af + acceleration, maxAcceleration);
             }
             sar = sar + af * (ep - sar);
           }
