@@ -13,6 +13,8 @@ class DataUtil {
     calcRSI(dataList);
     calcWR(dataList);
     calcCCI(dataList);
+    calculateEMA(dataList);
+    calculateSAR(dataList);
   }
 
   static calcMA(List<KLineEntity> dataList, List<int> maDayList) {
@@ -249,6 +251,77 @@ class DataUtil {
       if (kline.cci!.isNaN) {
         kline.cci = 0.0;
       }
+    }
+  }
+
+  static void calculateEMA(List<KLineEntity> dataList) {
+    double k1 = 2.0 / (5 + 1);
+    double k2 = 2.0 / (10 + 1);
+    double k3 = 2.0 / (20 + 1);
+    double ema5 = 0.0;
+    double ema10 = 0.0;
+    double ema20 = 0.0;
+
+    for (int i = 0; i < dataList.length; i++) {
+      KLineEntity entity = dataList[i];
+      if (i == 0) {
+        ema5 = entity.close;
+        ema10 = entity.close;
+        ema20 = entity.close;
+      } else {
+        ema5 = ema5 * (1 - k1) + entity.close * k1;
+        ema10 = ema10 * (1 - k2) + entity.close * k2;
+        ema20 = ema20 * (1 - k3) + entity.close * k3;
+      }
+      entity.ema5 = ema5;
+      entity.ema10 = ema10;
+      entity.ema20 = ema20;
+    }
+  }
+
+  static void calculateSAR(List<KLineEntity> dataList) {
+    double acceleration = 0.02;
+    double maximum = 0.2;
+    double sar = 0.0;
+    bool isLong = true;
+    double ep = 0.0;
+    double af = acceleration;
+
+    for (int i = 0; i < dataList.length; i++) {
+      KLineEntity entity = dataList[i];
+      if (i == 0) {
+        sar = entity.low;
+        ep = entity.high;
+      } else {
+        if (isLong) {
+          if (entity.low < sar) {
+            isLong = false;
+            sar = ep;
+            ep = entity.low;
+            af = acceleration;
+          } else {
+            if (entity.high > ep) {
+              ep = entity.high;
+              af = min(af + acceleration, maximum);
+            }
+            sar = sar + af * (ep - sar);
+          }
+        } else {
+          if (entity.high > sar) {
+            isLong = true;
+            sar = ep;
+            ep = entity.high;
+            af = acceleration;
+          } else {
+            if (entity.low < ep) {
+              ep = entity.low;
+              af = min(af + acceleration, maximum);
+            }
+            sar = sar + af * (ep - sar);
+          }
+        }
+      }
+      entity.sar = sar;
     }
   }
 }

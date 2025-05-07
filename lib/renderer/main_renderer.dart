@@ -92,6 +92,19 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
                 style: getTextStyle(this.chartColors.ma30Color)),
         ],
       );
+    } else if (state == MainState.EMA) {
+      span = TextSpan(
+        children: _createEMATextSpan(data),
+      );
+    } else if (state == MainState.SAR) {
+      span = TextSpan(
+        children: [
+          if (data.sar != 0)
+            TextSpan(
+                text: "SAR:${format(data.sar)}    ",
+                style: getTextStyle(this.chartColors.ma5Color)),
+        ],
+      );
     }
     if (span == null) return;
     TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);
@@ -112,6 +125,26 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     return result;
   }
 
+  List<InlineSpan> _createEMATextSpan(CandleEntity data) {
+    List<InlineSpan> result = [];
+    if (data.ema5 != 0) {
+      result.add(TextSpan(
+          text: "EMA5:${format(data.ema5)}    ",
+          style: getTextStyle(this.chartColors.ma5Color)));
+    }
+    if (data.ema10 != 0) {
+      result.add(TextSpan(
+          text: "EMA10:${format(data.ema10)}    ",
+          style: getTextStyle(this.chartColors.ma10Color)));
+    }
+    if (data.ema20 != 0) {
+      result.add(TextSpan(
+          text: "EMA20:${format(data.ema20)}    ",
+          style: getTextStyle(this.chartColors.ma30Color)));
+    }
+    return result;
+  }
+
   @override
   void drawChart(CandleEntity lastPoint, CandleEntity curPoint, double lastX,
       double curX, Size size, Canvas canvas) {
@@ -123,6 +156,10 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         drawMaLine(lastPoint, curPoint, canvas, lastX, curX);
       } else if (state == MainState.BOLL) {
         drawBollLine(lastPoint, curPoint, canvas, lastX, curX);
+      } else if (state == MainState.EMA) {
+        drawEMALine(lastPoint, curPoint, canvas, lastX, curX);
+      } else if (state == MainState.SAR) {
+        drawSARPoint(curPoint, canvas, curX);
       }
     }
   }
@@ -207,6 +244,30 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     if (lastPoint.dn != 0) {
       drawLine(lastPoint.dn, curPoint.dn, canvas, lastX, curX,
           this.chartColors.ma30Color);
+    }
+  }
+
+  void drawEMALine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
+      double lastX, double curX) {
+    if (lastPoint.ema5 != 0 && curPoint.ema5 != 0) {
+      drawLine(lastPoint.ema5, curPoint.ema5, canvas, lastX, curX,
+          this.chartColors.ma5Color);
+    }
+    if (lastPoint.ema10 != 0 && curPoint.ema10 != 0) {
+      drawLine(lastPoint.ema10, curPoint.ema10, canvas, lastX, curX,
+          this.chartColors.ma10Color);
+    }
+    if (lastPoint.ema20 != 0 && curPoint.ema20 != 0) {
+      drawLine(lastPoint.ema20, curPoint.ema20, canvas, lastX, curX,
+          this.chartColors.ma30Color);
+    }
+  }
+
+  void drawSARPoint(CandleEntity curPoint, Canvas canvas, double curX) {
+    if (curPoint.sar != 0) {
+      double y = getY(curPoint.sar!);
+      canvas.drawCircle(
+          Offset(curX, y), 2.0, Paint()..color = this.chartColors.ma5Color);
     }
   }
 

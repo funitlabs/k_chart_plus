@@ -17,4 +17,9 @@ mixin CandleEntity {
   double? dn;
 
   double? BOLLMA;
+
+  double? ema5;
+  double? ema10;
+  double? ema20;
+  double? sar;
 }
