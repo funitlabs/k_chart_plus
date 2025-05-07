@@ -69,7 +69,7 @@ class KChartWidget extends StatefulWidget {
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
     this.emaDayList = const [5, 10, 20],
-    List<int>? volumeMaDayList,
+    this.volumeMaDayList = const [],
     ChartColors? chartColors,
     this.chartStyle = const ChartStyle(),
     this.verticalTextAlignment = VerticalTextAlignment.left,
@@ -77,8 +77,7 @@ class KChartWidget extends StatefulWidget {
     this.xFrontPadding = 100.0,
     this.volDecimalPlaces = 0,
     this.indicatorColors,
-  })  : this.volumeMaDayList = volumeMaDayList ?? const [5, 10],
-        this.chartColors =
+  })  : this.chartColors =
             chartColors ?? ChartColors(indicatorColors: indicatorColors),
         super(key: key);
 
