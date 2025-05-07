@@ -236,14 +236,11 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawMaLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
-    for (int i = 0; i < (curPoint.maValueList?.length ?? 0); i++) {
-      if (i == 3) {
-        break;
-      }
-      if (lastPoint.maValueList?[i] != 0) {
-        drawLine(lastPoint.maValueList?[i], curPoint.maValueList?[i], canvas,
-            lastX, curX, this.chartColors.getMAColor(i));
-      }
+    if (lastPoint.maValueList == null || curPoint.maValueList == null) return;
+    for (int i = 0; i < curPoint.maValueList!.length && i < 10; i++) {
+      if (lastPoint.maValueList![i] == 0) continue;
+      drawLine(lastPoint.maValueList![i], curPoint.maValueList![i], canvas,
+          lastX, curX, chartColors.getMAColor(i));
     }
   }
 
@@ -265,11 +262,12 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawEMALine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
-    for (int i = 0; i < (curPoint.emaValueList?.length ?? 0); i++) {
-      if (lastPoint.emaValueList?[i] != 0 && curPoint.emaValueList?[i] != 0) {
-        drawLine(lastPoint.emaValueList?[i], curPoint.emaValueList?[i], canvas,
-            lastX, curX, this.chartColors.getMAColor(i));
-      }
+    if (lastPoint.emaValueList == null || curPoint.emaValueList == null) return;
+    for (int i = 0; i < curPoint.emaValueList!.length && i < 10; i++) {
+      if (lastPoint.emaValueList![i] == 0 || curPoint.emaValueList![i] == 0)
+        continue;
+      drawLine(lastPoint.emaValueList![i], curPoint.emaValueList![i], canvas,
+          lastX, curX, chartColors.getMAColor(i));
     }
   }
 

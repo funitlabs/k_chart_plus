@@ -48,31 +48,36 @@ class KChartWidget extends StatefulWidget {
   final bool isTrendLine;
   final double xFrontPadding;
   final int volDecimalPlaces;
+  final List<Color>? indicatorColors;
 
-  KChartWidget(
+  KChartWidget({
+    Key? key,
     this.datas,
-    this.chartStyle,
-    this.chartColors, {
-    required this.isTrendLine,
-    this.xFrontPadding = 100,
     this.mainState = MainState.MA,
-    this.secondaryStateLi = const <SecondaryState>{},
     this.volHidden = false,
+    this.secondaryStateLi = const {},
     this.isLine = false,
-    this.isTapShowInfoDialog = false,
+    this.isTapShowInfoDialog = true,
     this.hideGrid = false,
     this.showNowPrice = true,
     this.showInfoDialog = true,
     this.chartTranslations = const ChartTranslations(),
-    this.timeFormat = TimeFormat.YEAR_MONTH_DAY,
+    this.timeFormat = const [],
+    this.mBaseHeight = 0.0,
     this.onLoadMore,
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
     this.emaDayList = const [5, 10, 20],
+    ChartColors? chartColors,
+    this.chartStyle = const ChartStyle(),
     this.verticalTextAlignment = VerticalTextAlignment.left,
-    this.mBaseHeight = 360,
+    this.isTrendLine = false,
+    this.xFrontPadding = 0.0,
     this.volDecimalPlaces = 0,
-  });
+    this.indicatorColors,
+  })  : this.chartColors =
+            chartColors ?? ChartColors(indicatorColors: indicatorColors),
+        super(key: key);
 
   @override
   _KChartWidgetState createState() => _KChartWidgetState();
