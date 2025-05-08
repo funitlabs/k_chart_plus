@@ -92,9 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
           const SafeArea(bottom: false, child: SizedBox(height: 10)),
           Stack(children: <Widget>[
             KChartWidget(
-              datas,
-              chartStyle,
-              chartColors,
+              datas: datas,
+              chartStyle: chartStyle,
+              chartColors: chartColors,
               mBaseHeight: 360,
               isTrendLine: false,
               mainState: _mainState,
@@ -102,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               secondaryStateLi: _secondaryStateLi.toSet(),
               fixedLength: 2,
               timeFormat: TimeFormat.YEAR_MONTH_DAY,
+              volumeMaDayList: [],
             ),
             if (showLoading)
               Container(

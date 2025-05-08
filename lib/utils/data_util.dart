@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../entity/index.dart';
+import 'package:flutter/foundation.dart';
 
 class DataUtil {
   static calculate(List<KLineEntity> dataList,
@@ -13,6 +14,8 @@ class DataUtil {
       double sarMaximum = 0.2,
       int bollPeriod = 20,
       double bollBandwidth = 2.0]) {
+    debugPrint("dataList: $dataList");
+
     calcMA(dataList, maDayList);
     calcBOLL(dataList, bollPeriod, bollBandwidth);
     calcVolumeMA(dataList, volumeMaDayList);
