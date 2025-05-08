@@ -15,8 +15,7 @@ class DataUtil {
       double bollBandwidth = 2.0]) {
     calcMA(dataList, maDayList);
     calcBOLL(dataList, bollPeriod, bollBandwidth);
-    calcVolumeMA(
-        dataList, volumeMaDayList.isEmpty ? const [5, 10] : volumeMaDayList);
+    calcVolumeMA(dataList, volumeMaDayList);
     calcKDJ(dataList);
     calcMACD(dataList);
     calcRSI(dataList);
