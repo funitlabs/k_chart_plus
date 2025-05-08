@@ -75,6 +75,9 @@ class KLineEntity extends KEntity {
 
     if (maDayList.isEmpty) return;
 
+    // volumeMaDayList를 저장
+    this.volumeMaDayList = maDayList;
+
     for (int day in maDayList) {
       double maValue = calculateMA(day, (e) => e.vol);
       if (maValue > 0) {
