@@ -1,4 +1,5 @@
 import '../entity/k_entity.dart';
+import 'package:flutter/foundation.dart';
 
 class KLineEntity extends KEntity {
   late double open;
@@ -70,7 +71,9 @@ class KLineEntity extends KEntity {
 
   // 거래량 MA 계산
   void calculateVolumeMA(List<int> maDayList) {
-    if (maDayList == null || maDayList.isEmpty) return;
+    debugPrint("maDayList: $maDayList");
+
+    if (maDayList.isEmpty) return;
 
     for (int day in maDayList) {
       double maValue = calculateMA(day, (e) => e.vol);

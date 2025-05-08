@@ -28,9 +28,6 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
   }
 
   double _getVolumeMAValue(VolumeEntity point, int day) {
-    debugPrint("point: $point");
-    debugPrint("day: $day");
-
     return point.getMAVolume(day) ?? 0;
   }
 
@@ -50,15 +47,12 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     }
 
     // volumeMaDayList에 있는 기간에 대해서만 MA 라인을 그립니다
-    debugPrint("volumeMaDayList: $volumeMaDayList");
 
     for (int i = 0; i < volumeMaDayList.length; i++) {
       final day = volumeMaDayList[i];
       final maValue = _getVolumeMAValue(curPoint, day);
       final lastMaValue = _getVolumeMAValue(lastPoint, day);
 
-      debugPrint("maValue: $maValue");
-      debugPrint("lastMaValue: $lastMaValue");
       if (lastMaValue != 0 && maValue != 0) {
         drawLine(lastMaValue, maValue, canvas, lastX, curX,
             this.chartColors.getMAColor(i));
