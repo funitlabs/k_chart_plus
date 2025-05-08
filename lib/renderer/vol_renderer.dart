@@ -56,6 +56,9 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
       final day = volumeMaDayList[i];
       final maValue = _getVolumeMAValue(curPoint, day);
       final lastMaValue = _getVolumeMAValue(lastPoint, day);
+
+      debugPrint("maValue: $maValue");
+      debugPrint("lastMaValue: $lastMaValue");
       if (lastMaValue != 0 && maValue != 0) {
         drawLine(lastMaValue, maValue, canvas, lastX, curX,
             this.chartColors.getMAColor(i));
