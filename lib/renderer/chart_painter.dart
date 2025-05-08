@@ -78,7 +78,7 @@ class ChartPainter extends BaseChartPainter {
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
     this.emaDayList = const [5, 10, 20],
-    this.volumeMaDayList = const [5, 10],
+    required this.volumeMaDayList,
   }) : super(chartStyle,
             datas: datas,
             scaleX: scaleX,

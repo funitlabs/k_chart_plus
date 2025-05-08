@@ -6,7 +6,7 @@ class DataUtil {
   static calculate(List<KLineEntity> dataList,
       [List<int> maDayList = const [5, 10, 20],
       List<int> emaDayList = const [5, 10, 20],
-      List<int> volumeMaDayList = const [5, 10],
+      List<int> volumeMaDayList = const [],
       int n = 20,
       k = 2,
       double sarStart = 0.02,
