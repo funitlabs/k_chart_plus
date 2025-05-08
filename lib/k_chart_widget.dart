@@ -69,7 +69,7 @@ class KChartWidget extends StatefulWidget {
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
     this.emaDayList = const [5, 10, 20],
-    this.volumeMaDayList = const [],
+    this.volumeMaDayList = const [5, 10],
     ChartColors? chartColors,
     this.chartStyle = const ChartStyle(),
     this.verticalTextAlignment = VerticalTextAlignment.left,
