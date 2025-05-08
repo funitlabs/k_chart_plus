@@ -31,15 +31,12 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     debugPrint("point: $point");
     debugPrint("day: $day");
 
-    if (point == null) return 0;
     return point.getMAVolume(day) ?? 0;
   }
 
   @override
   void drawChart(VolumeEntity lastPoint, VolumeEntity curPoint, double lastX,
       double curX, Size size, Canvas canvas) {
-    if (curPoint == null) return;
-
     double r = mVolWidth / 2;
     double top = getVolY(curPoint.vol);
     double bottom = chartRect.bottom;
@@ -74,7 +71,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
   @override
   void drawText(Canvas canvas, VolumeEntity data, double x) {
-    if (data == null || data.vol == 0) return;
+    if (data.vol == 0) return;
 
     TextSpan span = TextSpan(
       children: [
