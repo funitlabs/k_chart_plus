@@ -50,6 +50,8 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     }
 
     // volumeMaDayList에 있는 기간에 대해서만 MA 라인을 그립니다
+    debugPrint("volumeMaDayList: $volumeMaDayList");
+
     for (int i = 0; i < volumeMaDayList.length; i++) {
       final day = volumeMaDayList[i];
       final maValue = _getVolumeMAValue(curPoint, day);
