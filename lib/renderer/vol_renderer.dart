@@ -28,6 +28,9 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
   }
 
   double _getVolumeMAValue(VolumeEntity point, int day) {
+    debugPrint("point: $point");
+    debugPrint("day: $day");
+
     if (point == null) return 0;
     return point.getMAVolume(day) ?? 0;
   }
